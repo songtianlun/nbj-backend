@@ -6,6 +6,7 @@ import (
 	"log"
 	"minepin-backend/router"
 	"net/http"
+	"os"
 	"time"
 )
 
@@ -26,8 +27,13 @@ func main() {
 		log.Print("The route has been deployed successfully.")
 	}()
 
-	log.Printf("Start to listening the incoming requests on http address: %s", ":6010")
-	log.Printf(http.ListenAndServe(":6010", g).Error())
+	port := os.Getenv("PORT")
+	if port == "" {
+		port = "8080"
+	}
+
+	log.Printf("Start to listening the incoming requests on http address: %s", ":"+port)
+	log.Printf(http.ListenAndServe(":"+port, g).Error())
 }
 
 func pingServer() error {
