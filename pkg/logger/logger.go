@@ -62,8 +62,9 @@ func getAllCores() []zapcore.Core {
 	var allCore []zapcore.Core
 	writeSyncer := getLogWriter()
 	encoder := getEncoder()
-	// debug 模式下将日志同时输出到 stdout
-	if config.Get(config.MINEPIN_RUNMODE) == "debug" {
+	// debug 模式或指定输出到屏终端时将日志同时输出到 stdout
+	if config.Get(config.MINEPIN_RUNMODE) == "debug" ||
+		config.GetBool("log.logger_stdout") {
 		consoleDebugging := zapcore.Lock(os.Stdout)
 		allCore = append(allCore, zapcore.NewCore(encoder, consoleDebugging, logLevel))
 	}

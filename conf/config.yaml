@@ -11,6 +11,7 @@ log:
   logger_max_file_num: 64
   logger_max_file_day: 7
   logger_compress: false
+  logger_stdout: true
 db:
   name: db_apiserver
   addr: 127.0.0.1:3306
