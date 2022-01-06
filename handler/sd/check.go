@@ -38,9 +38,9 @@ func CPUCheck(c *gin.Context) {
 
 	status := http.StatusOK
 
-	if l5 >= float64(cores-1) {
+	if l5 >= float64(cores) {
 		status = http.StatusInternalServerError
-	} else if l5 >= float64(cores-2) {
+	} else if l5 >= float64(cores-1) {
 		status = http.StatusTooManyRequests
 	}
 

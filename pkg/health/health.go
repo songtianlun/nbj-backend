@@ -46,9 +46,9 @@ func CpuStatus() (string, int, float64) {
 
 	tag := "OK"
 
-	if l5 >= float64(cores-1) {
+	if l5 >= float64(cores) {
 		tag = "CRITICAL"
-	} else if l5 >= float64(cores-2) {
+	} else if l5 >= float64(cores-1) {
 		tag = "WARNING"
 	}
 
