@@ -1,0 +1,2 @@
+2022-01-06T23:49:49.307+0800	INFO	logger/logger.go:78	test info log
+2022-01-06T23:49:49.310+0800	DEBUG	logger/logger.go:77	test debug log

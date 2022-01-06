@@ -1,0 +1,17 @@
+2022-01-06T23:52:44.760+0800	INFO	logger/logger.go:78	test info log
+2022-01-07T00:00:06.839+0800	INFO	logger/logger.go:77	test info log
+2022-01-07T00:00:06.842+0800	DEBUG	logger/logger.go:76	test debug log
+2022-01-07T00:00:24.506+0800	INFO	logger/logger.go:77	test info log
+2022-01-07T00:00:24.509+0800	DEBUG	logger/logger.go:76	test debug log
+2022-01-07T00:11:40.902+0800	INFO	logger/logger.go:78	Start to listening the incoming requests on http address: %s:8080
+2022-01-07T00:11:40.903+0800	INFO	logger/logger.go:74	%!d(string=3)
+2022-01-07T00:11:40.928+0800	INFO	logger/logger.go:78	The route has been deployed successfully.
+2022-01-07T00:24:47.720+0800	INFO	minepin-backend/main.go:63	Start to listening the incoming requests on http address: %s:8080
+2022-01-07T00:24:47.720+0800	INFO	minepin-backend/main.go:68	%!d(string=3)
+2022-01-07T00:24:47.746+0800	INFO	minepin-backend/main.go:60	The route has been deployed successfully.
+2022-01-07T00:28:55.337+0800	INFO	minepin-backend/main.go:68	3
+2022-01-07T00:28:55.337+0800	INFO	minepin-backend/main.go:63	Start to listening the incoming requests on http address: %s:8080
+2022-01-07T00:28:55.355+0800	INFO	minepin-backend/main.go:75	Waiting for the router, retry in 1 seconds.
+2022-01-07T00:28:56.384+0800	INFO	minepin-backend/main.go:60	The route has been deployed successfully.
+2022-01-07T00:29:13.066+0800	INFO	minepin-backend/main.go:63	Start to listening the incoming requests on http address: %s:8080
+2022-01-07T00:29:13.087+0800	INFO	minepin-backend/main.go:60	The route has been deployed successfully.

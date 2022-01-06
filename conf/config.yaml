@@ -6,10 +6,10 @@ max_ping_count: 10           # pingServer函数try的次数
 jwt_secret: Rtg8BPKNEf2mB4mgvKONGPZZQSaJWNLijxR42qRgq0iBb5
 log:
   logger_level: debug        # debug->info->warn->error
-  logger_file_name: log/GRServer.log
-  logger_max_size_mb: 32
+  logger_file_name: log/minepin-backend.log
+  logger_max_size_mb: 1
   logger_max_file_num: 64
-  logger_max_file_day: 365
+  logger_max_file_day: 7
   logger_compress: false
 db:
   name: db_apiserver

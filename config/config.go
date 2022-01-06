@@ -3,7 +3,6 @@ package config
 import (
 	"github.com/fsnotify/fsnotify"
 	"github.com/spf13/viper"
-	"log"
 	"os"
 	"strings"
 )
@@ -54,9 +53,7 @@ func (c *Config) initConfig() error {
 // 监控配置文件变化并热加载程序
 func (c *Config) watchConfig() {
 	viper.WatchConfig()
-	viper.OnConfigChange(func(e fsnotify.Event) {
-		log.Printf("config file changed: %s", e.Name)
-	})
+	viper.OnConfigChange(func(e fsnotify.Event) {})
 }
 
 func Init(cfg string) error {
@@ -73,6 +70,7 @@ func Init(cfg string) error {
 	return nil
 }
 
-func GetConfig(name string) interface{} { return viper.Get(name) }
-func GetString(name string) string      { return viper.GetString(name) }
-func GetInt(name string) int            { return viper.GetInt(name) }
+func Get(name string) interface{}  { return viper.Get(name) }
+func GetString(name string) string { return viper.GetString(name) }
+func GetInt(name string) int       { return viper.GetInt(name) }
+func GetBool(name string) bool     { return viper.GetBool(name) }

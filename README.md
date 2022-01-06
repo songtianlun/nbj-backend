@@ -7,6 +7,8 @@ Dev deploy with [render](https://render.com).
  - [`gin`](https://gin-gonic.com) to web server.
  - [`gopsutil`](https://github.com/shirou/gopsutil) to system check.
  - [`viper`](https://github.com/spf13/viper) to read config.
+ - [`zap`](https://github.com/uber-go/zap) to log.
+ - [`lumberjack`](https://github.com/natefinch/lumberjack) to log rolling.
 
 ## Config
 
