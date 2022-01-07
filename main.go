@@ -60,7 +60,7 @@ func main() {
 		logger.Info("The route has been deployed successfully.")
 	}()
 
-	logger.InfoF("Start to listening the incoming requests on http address: %s", ":"+config.GetString(config.MINEPIN_PORT))
+	logger.InfoF("Start to listening the incoming requests on http address: '%s'", ":"+config.GetString(config.MINEPIN_PORT))
 	logger.Info(http.ListenAndServe(":"+config.GetString(config.MINEPIN_PORT), g).Error())
 }
 
