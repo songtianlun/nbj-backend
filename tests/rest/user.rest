@@ -6,3 +6,7 @@ Content-Type: application/json
 
 ###
 
+POST https://minepin-backend.onrender.com/v1/user/
+Content-Type: application/json
+
+{"username":"admin","password":"admin"}

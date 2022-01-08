@@ -9,6 +9,7 @@ Dev deploy with [render](https://render.com).
  - [`viper`](https://github.com/spf13/viper) to read config.
  - [`zap`](https://github.com/uber-go/zap) to log.
  - [`lumberjack`](https://github.com/natefinch/lumberjack) to log rolling.
+ - [`GORM`](https://gorm.io/zh_CN/) for ORM.
 
 ## Config
 
