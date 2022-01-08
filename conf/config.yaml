@@ -13,7 +13,8 @@ log:
   logger_compress: false
   logger_stdout: true
 db:
-  name: db_apiserver
-  addr: 127.0.0.1:3306
-  username: root
-  password: tianlun666
+  type: sqlite3
+  name: minepin
+  addr: ./minepin.db
+  username: admin
+  password: admin

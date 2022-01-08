@@ -1,0 +1,21 @@
+package model
+
+import "time"
+
+type BaseModel struct {
+	Id        uint64     `gorm:"primary_key;AUTO_INCREMENT;column:id" json:"-"`
+	UUID      string     ``
+	CreatedAt time.Time  `gorm:"column:createdAt" json:"-"`
+	UpdatedAt time.Time  `gorm:"column:updatedAt" json:"-"`
+	DeletedAt *time.Time `gorm:"column:deletedAt" sql:"index" json:"-"`
+}
+
+type UserInfo struct {
+	Id        uint64 `json:"id"`
+	Username  string `json:"username"`
+	SayHello  string `json:"sayHello"`
+	Password  string `json:"password"`
+	Role      string `json:"role"`
+	CreatedAt string `json:"createdAt"`
+	UpdatedAt string `json:"updatedAt"`
+}

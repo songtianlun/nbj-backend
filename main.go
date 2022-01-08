@@ -8,6 +8,7 @@ import (
 	"github.com/spf13/pflag"
 	"github.com/spf13/viper"
 	"minepin-backend/config"
+	"minepin-backend/model"
 	"minepin-backend/pkg/logger"
 	v "minepin-backend/pkg/version"
 	"minepin-backend/router"
@@ -39,6 +40,8 @@ func main() {
 	if err := config.Init(*cfg); err != nil {
 		panic(err)
 	}
+
+	model.DB.Init()
 
 	logger.InitLogger()
 
