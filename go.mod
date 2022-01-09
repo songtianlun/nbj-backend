@@ -6,6 +6,7 @@ require (
 	github.com/fsnotify/fsnotify v1.5.1
 	github.com/gin-gonic/gin v1.7.7
 	github.com/go-playground/validator/v10 v10.10.0 // indirect
+	github.com/google/uuid v1.3.0 // indirect
 	github.com/jinzhu/now v1.1.4 // indirect
 	github.com/mattn/go-sqlite3 v1.14.10 // indirect
 	github.com/natefinch/lumberjack v2.0.0+incompatible

@@ -17,6 +17,8 @@ func Create(c *gin.Context) {
 	u := model.UserModel{
 		Username:  r.Username,
 		Password:  r.Password,
+		Email: r.Email,
+		Phone: r.Phone,
 	}
 
 	if err := u.Validate(); err != nil {

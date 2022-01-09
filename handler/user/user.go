@@ -5,6 +5,8 @@ import "minepin-backend/model"
 type CreateReq struct {
 	Username string `json:"username"`
 	Password string `json:"password"`
+	Email    string `json:"email"`
+	Phone    string `json:"phone"`
 }
 
 type CreateRep struct {

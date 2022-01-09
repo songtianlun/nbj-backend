@@ -2,7 +2,7 @@
 POST http://127.0.0.1:8080/v1/user/
 Content-Type: application/json
 
-{"username":"admin","password":"admin"}
+{"username":"admin","password":"admin", "email":"stl@frytea.com"}
 
 ###
 

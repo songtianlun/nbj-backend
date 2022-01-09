@@ -17,7 +17,10 @@ func openSqliteDB(path string) *gorm.DB {
 	if err != nil {
 		panic("failed to connect database")
 	}
-	db.AutoMigrate(&UserModel{})
+	err = db.AutoMigrate(&UserModel{})
+	if err != nil {
+		panic("fail to auto migrate db: " + err.Error())
+	}
 	return db
 }
 
