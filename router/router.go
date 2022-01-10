@@ -22,7 +22,6 @@ func Load(g *gin.Engine, mw ...gin.HandlerFunc) *gin.Engine {
 	g.POST("/login", user.Login)
 	g.POST("/register", user.Create)
 
-
 	u := g.Group("/v1/user")
 	{
 		u.POST("", user.Create)

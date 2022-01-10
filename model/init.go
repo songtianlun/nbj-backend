@@ -29,4 +29,3 @@ func (db *Database) Init() {
 		DB: openSqliteDB(config.GetString("db.addr")),
 	}
 }
-

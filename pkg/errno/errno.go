@@ -3,7 +3,7 @@ package errno
 import "fmt"
 
 type Errno struct {
-	Code int
+	Code    int
 	Message string
 }
 
@@ -41,7 +41,7 @@ func DecodeErr(err error) (int, string) {
 		return OK.Code, OK.Message
 	}
 
-	switch typed:= err.(type) {
+	switch typed := err.(type) {
 	case *Err:
 		return typed.Code, typed.Message
 	case *Errno:
@@ -52,6 +52,6 @@ func DecodeErr(err error) (int, string) {
 }
 
 func IsErrUserNotFound(err error) bool {
-	code,_ := DecodeErr(err)
+	code, _ := DecodeErr(err)
 	return code == ErrUserNotFound.Code
 }

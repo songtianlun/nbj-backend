@@ -15,8 +15,8 @@ type CreateRep struct {
 
 type ListReq struct {
 	Username string `json:"username"`
-	Offset   int `json:"offset"`
-	Limit    int `json:"limit"`
+	Offset   int    `json:"offset"`
+	Limit    int    `json:"limit"`
 }
 
 type ListRep struct {

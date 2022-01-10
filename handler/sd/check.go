@@ -8,9 +8,9 @@ import (
 
 func HealthCheck(c *gin.Context) {
 	message := "OK"
-	diskMessage,_ := health.DiskStatus()
-	cpuMessage,_,_ := health.CpuStatus()
-	ramMessage,_ := health.RAMStatus()
+	diskMessage, _ := health.DiskStatus()
+	cpuMessage, _, _ := health.CpuStatus()
+	ramMessage, _ := health.RAMStatus()
 
 	c.String(http.StatusOK, "\n"+
 		message+"\n"+

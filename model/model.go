@@ -7,7 +7,7 @@ import (
 )
 
 type BaseModel struct {
-	Id 		  uint64     `gorm:"column:id;AUTO_INCREMENT;comment:序号;unique" `
+	Id        uint64     `gorm:"column:id;AUTO_INCREMENT;comment:序号;unique" `
 	UUID      uuid.UUID  `gorm:"primary_key;not null;column:uuid;unique" json:"-"`
 	CreatedAt time.Time  `gorm:"column:createdAt" json:"-"`
 	UpdatedAt time.Time  `gorm:"column:updatedAt" json:"-"`
