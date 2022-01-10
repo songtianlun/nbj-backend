@@ -19,6 +19,10 @@ func Load(g *gin.Engine, mw ...gin.HandlerFunc) *gin.Engine {
 		c.String(http.StatusNotFound, "The incorrect API route.")
 	})
 
+	g.POST("/login", user.Login)
+	g.POST("/register", user.Create)
+
+
 	u := g.Group("/v1/user")
 	{
 		u.POST("", user.Create)

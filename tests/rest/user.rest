@@ -1,5 +1,21 @@
-# curl -XPOST -H "Content-Type: application/json" http://127.0.0.1:8080/v1/user/admin2?desc=test -d'{"username":"admin","password":"admin"}'
+# curl -XPOST -H "Content-Type: application/json" http://127.0.0.1:8080/login -d'{"username":"admin","password":"admin"}'
+POST http://127.0.0.1:8080/login
+Content-Type: application/json
+
+{"username":"admin","password":"admin"}
+
+###
+
+# curl -XPOST -H "Content-Type: application/json" http://127.0.0.1:8080/v1/user/ -d'{"username":"admin","password":"admin"}'
 POST http://127.0.0.1:8080/v1/user/
+Content-Type: application/json
+
+{"username":"admin","password":"admin", "email":"stl@frytea.com"}
+
+###
+
+# curl -XPOST -H "Content-Type: application/json" http://127.0.0.1:8080/register/ -d'{"username":"admin","password":"admin"}'
+POST http://127.0.0.1:8080/register/
 Content-Type: application/json
 
 {"username":"admin","password":"admin", "email":"stl@frytea.com"}
@@ -10,3 +26,4 @@ POST https://minepin-backend.onrender.com/v1/user/
 Content-Type: application/json
 
 {"username":"admin","password":"admin"}
+

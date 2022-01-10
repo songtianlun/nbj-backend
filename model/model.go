@@ -7,7 +7,8 @@ import (
 )
 
 type BaseModel struct {
-	UUID      uuid.UUID  `gorm:"primary_key;not null;column:uuid" json:"-"`
+	Id 		  uint64     `gorm:"column:id;AUTO_INCREMENT;comment:序号;unique" `
+	UUID      uuid.UUID  `gorm:"primary_key;not null;column:uuid;unique" json:"-"`
 	CreatedAt time.Time  `gorm:"column:createdAt" json:"-"`
 	UpdatedAt time.Time  `gorm:"column:updatedAt" json:"-"`
 	DeletedAt *time.Time `gorm:"column:deletedAt" sql:"index" json:"-"`
@@ -21,6 +22,10 @@ type UserInfo struct {
 	Role      string `json:"role"`
 	CreatedAt string `json:"createdAt"`
 	UpdatedAt string `json:"updatedAt"`
+}
+
+type Token struct {
+	Token string `json:"token"`
 }
 
 func (bm *BaseModel) BeforeCreate(tx *gorm.DB) (err error) {
