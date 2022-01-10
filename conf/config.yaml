@@ -3,15 +3,16 @@ addr: 8080                   # HTTP绑定端口
 name: minepin                # API Server的名字
 url: http://127.0.0.1:8080   # pingServer函数请求的API服务器的ip:port
 max_ping_count: 10           # pingServer函数try的次数
-jwt_secret: Rtg8BPKNEf2mB4mgvKONGPZZQSaJWNLijxR42qRgq0iBb5
+jwt_secret: Rtg8BPKNEf2mB4mgvKONGPZZQSaJWNLijxR42qRgq0iBb5 # only debug
 log:
   logger_level: debug        # debug->info->warn->error
   logger_file_name: log/minepin-backend.log
   logger_max_size_mb: 1
   logger_max_file_num: 64
   logger_max_file_day: 7
-  logger_compress: false
-  logger_stdout: true
+  logger_compress: false    # 日志压缩
+  logger_stdout: true       # 显式指定日志输出到 stdout
+  logger_only_stdout: true  # 日志仅输出到 stdout
 db:
   type: sqlite3
   name: minepin
