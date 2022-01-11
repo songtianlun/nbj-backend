@@ -2,15 +2,23 @@ package model
 
 import (
 	"github.com/go-playground/validator/v10"
+	"gorm.io/gorm"
 	"minepin-backend/pkg/auth"
+	"minepin-backend/pkg/logger"
+	"regexp"
 )
 
 type UserModel struct {
 	BaseModel
-	Username string `json:"username" gorm:"column:username;not null;unique" binding:"required" validate:"min=1,max=32"`
-	Password string `json:"password" gorm:"column:password;not null" binding:"required" validate:"min=5,max=128"`
 	Email    string `json:"email" gorm:"column:email;unique" validate:"max=64"`
-	Phone    string `json:"phone" gorm:"column:phone" validate:"max=16"`
+	Phone    string `json:"phone" gorm:"column:phone;unique" validate:"max=16"`
+	Password string `json:"password" gorm:"column:password;not null" validate:"min=5,max=128"`
+	Nickname string `json:"nickname" gorm:"column:nickname;not null;default:-" validate:"min=1,max=32"`
+}
+
+type UserBind struct {
+	Username string `json:"username" binding:"required" validate:"min=1,max=32"`
+	Password string `json:"password" binding:"required" validate:"min=5,max=128"`
 }
 
 func (u *UserModel) Create() error {
@@ -28,8 +36,19 @@ func (u *UserModel) Validate() error {
 	return validate.Struct(u)
 }
 
+// GetUser 根据邮箱/手机号获取用户信息
 func GetUser(username string) (*UserModel, error) {
+	var d *gorm.DB
 	u := &UserModel{}
-	d := DB.DB.Where("username = ?", username).First(&u)
+	reg := regexp.MustCompile(
+		`^[0-9a-z][_.0-9a-z-]{0,31}@([0-9a-z][0-9a-z-]{0,30}[0-9a-z]\.){1,4}[a-z]{2,4}$`)
+	if reg.MatchString(username) {
+		logger.Debug("Login with email: "+username)
+		d = DB.DB.Where("email = ?", username).First(&u)
+	} else {
+		logger.Debug("Login with phone: "+username)
+		d = DB.DB.Where("phone = ?", username).First(&u)
+	}
+
 	return u, d.Error
 }

@@ -17,6 +17,10 @@ Dev deploy with [render](https://render.com).
 
 程序配置优先级 `环境变量` > `配置文件`
 
+## Limit
+
+- 登陆可以使用 `邮箱/手机号` + `密码`
+
 
 ## ToDo
 

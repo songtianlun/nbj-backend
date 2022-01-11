@@ -10,7 +10,7 @@ import (
 )
 
 func Login(c *gin.Context) {
-	var u model.UserModel
+	var u model.UserBind
 	if err := c.Bind(&u); err != nil {
 		handler.SendResponse(c, errno.ErrBind, nil)
 		return
@@ -27,9 +27,9 @@ func Login(c *gin.Context) {
 		return
 	}
 
-	t, err := token.Sign(c, token.Context{
+	t, err := token.Sign(token.Context{
 		ID:       d.Id,
-		Username: d.Username,
+		UUID:     d.UUID,
 	}, "")
 	if err != nil {
 		handler.SendResponse(c, errno.ErrToken, nil)

@@ -15,7 +15,7 @@ func Create(c *gin.Context) {
 	}
 
 	u := model.UserModel{
-		Username: r.Username,
+		Nickname: r.Nickname,
 		Password: r.Password,
 		Email:    r.Email,
 		Phone:    r.Phone,
@@ -36,7 +36,11 @@ func Create(c *gin.Context) {
 		return
 	}
 
-	rsp := CreateRep{Username: r.Username}
+	rsp := CreateRep{
+		Nickname: r.Nickname,
+		Email:    r.Email,
+		Phone:    r.Phone,
+	}
 
 	handler.SendResponse(c, nil, rsp)
 

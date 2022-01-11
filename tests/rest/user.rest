@@ -2,7 +2,15 @@
 POST http://127.0.0.1:8080/login
 Content-Type: application/json
 
-{"username":"admin","password":"admin"}
+{"username":"stl@frytea.com","password":"admin"}
+
+###
+
+# curl -XPOST -H "Content-Type: application/json" http://127.0.0.1:8080/login -d'{"username":"admin","password":"admin"}'
+POST http://127.0.0.1:8080/login
+Content-Type: application/json
+
+{"username":"18000010001","password":"admin"}
 
 ###
 
@@ -10,7 +18,7 @@ Content-Type: application/json
 POST http://127.0.0.1:8080/v1/user/
 Content-Type: application/json
 
-{"username":"admin","password":"admin", "email":"stl@frytea.com"}
+{"nickname":"admin","password":"admin", "email":"stl@frytea.com", "phone":"18000010001"}
 
 ###
 
@@ -21,6 +29,7 @@ Content-Type: application/json
 {"username":"admin","password":"admin", "email":"stl@frytea.com"}
 
 ###
+
 
 POST https://minepin-backend.onrender.com/v1/user/
 Content-Type: application/json
