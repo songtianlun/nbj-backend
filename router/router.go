@@ -23,8 +23,9 @@ func Load(g *gin.Engine, mw ...gin.HandlerFunc) *gin.Engine {
 	g.POST("/register", user.Create)
 
 	u := g.Group("/v1/user")
+	u.Use(middleware.AuthMiddleware())
 	{
-		u.POST("", user.Create)
+		u.GET("", user.List)
 	}
 
 	svcd := g.Group("/sd")

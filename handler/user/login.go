@@ -28,8 +28,8 @@ func Login(c *gin.Context) {
 	}
 
 	t, err := token.Sign(token.Context{
-		ID:       d.Id,
-		UUID:     d.UUID,
+		UUID: d.UUID,
+		Role: d.Role,
 	}, "")
 	if err != nil {
 		handler.SendResponse(c, errno.ErrToken, nil)

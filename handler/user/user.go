@@ -1,5 +1,7 @@
 package user
 
+import "minepin-backend/model"
+
 type CreateReq struct {
 	Nickname string `json:"nickname"`
 	Password string `json:"password"`
@@ -14,12 +16,11 @@ type CreateRep struct {
 }
 
 type ListReq struct {
-	Username string `json:"username"`
-	Offset   int    `json:"offset"`
-	Limit    int    `json:"limit"`
+	Offset int `json:"offset"`
+	Limit  int `json:"limit"`
 }
 
-//type ListRep struct {
-//	TotalCount uint64            `json:"totalCount"`
-//	UserList   []*model.UserInfo `json:"userList"`
-//}
+type ListRep struct {
+	TotalCount int64             `json:"totalCount"`
+	UserList   []*model.UserInfo `json:"userList"`
+}

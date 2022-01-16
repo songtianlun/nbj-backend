@@ -1,3 +1,10 @@
+# curl -XPOST -H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE1MjgwMTY5MjIsImlkIjowLCJuYmYiOjE1MjgwMTY5MjIsInVzZXJuYW1lIjoiYWRtaW4ifQ.LjxrK9DuAwAzUD8-9v43NzWBN7HXsSLfebw92DKd1JQ" -H "Content-Type: application/json" http://127.0.0.1:8080/v1/user -d'{"username":"user1","password":"user1234"}'
+GET http://127.0.0.1:8080/v1/user/
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2NDIzNDk5MTUsImlhdCI6MTY0MjM0OTg5NSwibmJmIjoxNjQyMzQ5ODk1LCJyb2xlIjozLCJ1dWlkIjoiZWUyZTQ2NzItMzIxMS00ODIwLTg2N2EtODVmYmFiNWYyNDJkIn0.taMclDLPb1IutC1LGmjDACjH_ST5CaTFbB6632tyswM
+Content-Type: application/json
+
+###
+
 # curl -XPOST -H "Content-Type: application/json" http://127.0.0.1:8080/login -d'{"username":"admin","password":"admin"}'
 POST http://127.0.0.1:8080/login
 Content-Type: application/json
@@ -35,4 +42,6 @@ POST https://minepin-backend.onrender.com/v1/user/
 Content-Type: application/json
 
 {"username":"admin","password":"admin"}
+
+###
 

@@ -14,16 +14,6 @@ type BaseModel struct {
 	DeletedAt *time.Time `gorm:"column:deletedAt" sql:"index" json:"-"`
 }
 
-//type UserInfo struct {
-//	UUID      string `json:"uuid"`
-//	Nickname  string `json:"nickname"`
-//	SayHello  string `json:"sayHello"`
-//	Password  string `json:"password"`
-//	Role      string `json:"role"`
-//	CreatedAt string `json:"createdAt"`
-//	UpdatedAt string `json:"updatedAt"`
-//}
-
 type Token struct {
 	Token string `json:"token"`
 }
