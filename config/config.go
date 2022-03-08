@@ -4,6 +4,7 @@ import (
 	"github.com/fsnotify/fsnotify"
 	"github.com/gin-gonic/gin"
 	"github.com/spf13/viper"
+	"os"
 	"strings"
 )
 
@@ -33,6 +34,8 @@ const (
 	MINEPIN_DEFAULT_PORT           = "8080"
 	MINEPIN_DEFAULT_MAX_PING_COUNT = 3
 	MINEPIN_DEFAULT_RUNMODE        = "release"
+	MINEPIN_DEFAULT_DB_TYPE        = "sqlite3"
+	MINEPIN_DEFAULT_DB_ADDR        = "./minepin.db"
 )
 
 func (c *Config) initConfig() error {
@@ -52,10 +55,17 @@ func (c *Config) initConfig() error {
 	viper.SetDefault(MINEPIN_PORT, MINEPIN_DEFAULT_PORT)
 	viper.SetDefault(MINEPIN_MAX_PING_COUNT, MINEPIN_DEFAULT_MAX_PING_COUNT)
 	viper.SetDefault(MINEPIN_RUNMODE, MINEPIN_DEFAULT_RUNMODE)
+	viper.SetDefault(MINEPIN_DB_TYPE, MINEPIN_DEFAULT_DB_TYPE)
+	viper.SetDefault(MINEPIN_DB_ADDR, MINEPIN_DEFAULT_DB_ADDR)
 
+	_, err := os.Stat("./config.yaml")
+	if err != nil && os.IsNotExist(err) {
+		return nil
+	}
 	if err := viper.ReadInConfig(); err != nil {
 		return err
 	}
+
 	return nil
 }
 

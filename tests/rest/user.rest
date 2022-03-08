@@ -14,34 +14,17 @@ Content-Type: application/json
 ###
 
 # curl -XPOST -H "Content-Type: application/json" http://127.0.0.1:8080/login -d'{"username":"admin","password":"admin"}'
-POST http://127.0.0.1:8080/login
+POST http://127.0.0.1:6001/login
 Content-Type: application/json
 
-{"username":"18000010001","password":"admin"}
-
-###
-
-# curl -XPOST -H "Content-Type: application/json" http://127.0.0.1:8080/v1/user/ -d'{"username":"admin","password":"admin"}'
-POST http://127.0.0.1:8080/v1/user/
-Content-Type: application/json
-
-{"nickname":"admin","password":"admin", "email":"stl@frytea.com", "phone":"18000010001"}
+{"username":"stl@frytea.com","password":"123456"}
 
 ###
 
 # curl -XPOST -H "Content-Type: application/json" http://127.0.0.1:8080/register/ -d'{"username":"admin","password":"admin"}'
-POST http://127.0.0.1:8080/register/
+POST http://127.0.0.1:6001/register/
 Content-Type: application/json
 
-{"username":"admin","password":"admin", "email":"stl@frytea.com"}
+{"nickname":"admin","password":"123456", "email":"stl@frytea.com"}
 
-###
-
-
-POST http://3cus.frytea.com:8008/login
-Content-Type: application/json
-
-{"username":"admin","password":"admin"}
-
-###
 

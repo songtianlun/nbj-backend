@@ -24,7 +24,7 @@ type UserModel struct {
 	Email    string   `json:"email" gorm:"column:email;unique" validate:"max=64"`
 	Phone    string   `json:"phone" gorm:"column:phone;unique" validate:"max=16"`
 	Password string   `json:"password" gorm:"column:password;not null" validate:"min=5,max=128"`
-	Nickname string   `json:"nickname" gorm:"column:nickname;not null;default:-" validate:"min=1,max=32"`
+	Nickname string   `json:"nickname" gorm:"column:nickname;not null;default:-" validate:"min=1,max=128"`
 	Role     UserType `json:"role" gorm:"column:role;default:1"`
 }
 

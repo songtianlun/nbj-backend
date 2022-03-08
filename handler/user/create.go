@@ -5,6 +5,7 @@ import (
 	"minepin-backend/handler"
 	"minepin-backend/model"
 	"minepin-backend/pkg/errno"
+	"minepin-backend/pkg/logger"
 )
 
 func Create(c *gin.Context) {
@@ -23,6 +24,7 @@ func Create(c *gin.Context) {
 
 	if err := u.Validate(); err != nil {
 		handler.SendResponse(c, errno.ErrValidation, nil)
+		logger.ErrorF("error for valid data - %s", err.Error())
 		return
 	}
 
