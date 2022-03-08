@@ -40,6 +40,13 @@ func Sign(c Context, secret string) (tokenString string, err error) {
 	return
 }
 
+//func SignWithRefreshToken(c Context, secret string) (tokenString string, err error) {
+//	if secret == "" {
+//		secret = config.GetString("jwt_secret")
+//	}
+//	token := jwt
+//}
+
 // secretFunc 验证密钥格式
 func secretFunc(secret string) jwt.Keyfunc {
 	return func(token *jwt.Token) (interface{}, error) {

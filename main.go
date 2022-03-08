@@ -6,7 +6,6 @@ import (
 	"fmt"
 	"github.com/gin-gonic/gin"
 	"github.com/spf13/pflag"
-	"github.com/spf13/viper"
 	"minepin-backend/config"
 	"minepin-backend/model"
 	"minepin-backend/pkg/logger"
@@ -26,8 +25,8 @@ func main() {
 	pflag.Parse()
 
 	if *version {
-		v := v.Get()
-		marshalled, err := json.MarshalIndent(&v, "", "  ")
+		vv := v.Get()
+		marshalled, err := json.MarshalIndent(&vv, "", "  ")
 		if err != nil {
 			fmt.Printf("%v\n", err)
 			os.Exit(1)
@@ -41,11 +40,11 @@ func main() {
 		panic(err)
 	}
 
-	model.DB.Init()
-
 	logger.InitLogger()
 
-	gin.SetMode(config.GetString(config.MINEPIN_RUNMODE))
+	model.DB.Init()
+
+	gin.SetMode(config.GetMinePinRunMode())
 	g := gin.New()
 
 	middlewares := []gin.HandlerFunc{}
@@ -63,13 +62,13 @@ func main() {
 		logger.Info("The route has been deployed successfully.")
 	}()
 
-	logger.InfoF("Start to listening the incoming requests on http address: '%s'", ":"+config.GetString(config.MINEPIN_PORT))
-	logger.Info(http.ListenAndServe(":"+config.GetString(config.MINEPIN_PORT), g).Error())
+	logger.InfoF("Start to listening the incoming requests on http address: '%s'", ":"+config.GetMinePinPort())
+	logger.Info(http.ListenAndServe(":"+config.GetMinePinPort(), g).Error())
 }
 
 func pingServer() error {
-	for i := 0; i < viper.GetInt("max_ping_count"); i++ {
-		resp, err := http.Get("http://127.0.0.1:" + config.GetString(config.MINEPIN_PORT) + "/sd/health")
+	for i := 0; i < config.GetMinePinMaxPingCount(); i++ {
+		resp, err := http.Get("http://127.0.0.1:" + config.GetMinePinPort() + "/sd/health")
 		if err == nil && resp.StatusCode == 200 {
 			return nil
 		}

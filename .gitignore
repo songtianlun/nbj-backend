@@ -2,3 +2,4 @@ minepin-backend
 .idea
 minepin.db
 log
+conf/config.yaml

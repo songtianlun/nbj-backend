@@ -10,11 +10,10 @@ import (
 
 var Logger *zap.Logger             // 在每一微秒和每一次内存分配都很重要的上下文中，使用Logger，只支持强类型的结构化日志记录
 var SugarLogger *zap.SugaredLogger // 在性能很好但不是很关键的上下文中，使用SugaredLogger，支持结构化和 printf 风格
-
 var logLevel zapcore.LevelEnabler
 
 func InitLogger() {
-	switch config.GetString("log.logger_level") {
+	switch config.GetMinePinLogLevel() {
 	case "debug":
 		logLevel = zap.DebugLevel
 	case "info":
@@ -49,11 +48,11 @@ func getEncoder() zapcore.Encoder {
 
 func getLogWriter() zapcore.WriteSyncer {
 	lumberJackLogger := &lumberjack.Logger{
-		Filename:   config.GetString("log.logger_file_name"),
-		MaxSize:    config.GetInt("log.logger_max_size_mb"),
-		MaxBackups: config.GetInt("log.logger_max_file_num"),
-		MaxAge:     config.GetInt("log.logger_max_file_day"),
-		Compress:   config.GetBool("log.logger_compress"),
+		Filename:   config.GetMinePinLogFileName(),
+		MaxSize:    config.GetMinePinLogMaxSizeMb(),
+		MaxBackups: config.GetMinePinLogMaxFileNum(),
+		MaxAge:     config.GetMinePinLogMaxFileDay(),
+		Compress:   config.GetMinePinLogCompress(),
 	}
 	return zapcore.AddSync(lumberJackLogger)
 }
@@ -63,14 +62,14 @@ func getAllCores() []zapcore.Core {
 
 	encoder := getEncoder()
 	// debug 模式、显式输出到stdout 或 仅输出到 stdout 时将日志同时输出到 stdout
-	if config.Get(config.MINEPIN_RUNMODE) == "debug" ||
-		config.GetBool("log.logger_stdout") ||
-		config.GetBool("log.logger_only_stdout") {
+	if config.GetMinePinRunMode() == "debug" ||
+		config.GetMinePinLogStdout() ||
+		config.GetMinePinLogOnlyStdout() {
 		consoleDebugging := zapcore.Lock(os.Stdout)
 		allCore = append(allCore, zapcore.NewCore(encoder, consoleDebugging, logLevel))
 	}
 	// 仅输出到 stdout 时屏蔽文件输入
-	if !config.GetBool("log.logger_only_stdout") {
+	if !config.GetMinePinLogOnlyStdout() {
 		writeSyncer := getLogWriter()
 		allCore = append(allCore, zapcore.NewCore(encoder, writeSyncer, logLevel))
 	}

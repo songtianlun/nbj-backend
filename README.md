@@ -2,6 +2,12 @@
 
 Dev deploy with [render](https://render.com).
 
+## Usage
+
+```bash
+cp ./conf/config.sample.yaml ./conf/config.yaml
+```
+
 ## Libs
 
  - [`gin`](https://gin-gonic.com) to web server.

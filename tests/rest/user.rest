@@ -38,7 +38,7 @@ Content-Type: application/json
 ###
 
 
-POST https://minepin-backend.onrender.com/v1/user/
+POST http://3cus.frytea.com:8008/login
 Content-Type: application/json
 
 {"username":"admin","password":"admin"}
