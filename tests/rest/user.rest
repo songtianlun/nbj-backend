@@ -6,14 +6,6 @@ Content-Type: application/json
 ###
 
 # curl -XPOST -H "Content-Type: application/json" http://127.0.0.1:8080/login -d'{"username":"admin","password":"admin"}'
-POST http://127.0.0.1:8080/login
-Content-Type: application/json
-
-{"username":"stl@frytea.com","password":"admin"}
-
-###
-
-# curl -XPOST -H "Content-Type: application/json" http://127.0.0.1:8080/login -d'{"username":"admin","password":"admin"}'
 POST http://127.0.0.1:6001/login
 Content-Type: application/json
 

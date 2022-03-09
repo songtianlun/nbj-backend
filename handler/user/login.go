@@ -27,14 +27,14 @@ func Login(c *gin.Context) {
 		return
 	}
 
-	t, err := token.Sign(token.Context{
+	t, r, err := token.Sign(token.Context{
 		UUID: d.UUID,
 		Role: d.Role,
-	}, "")
+	})
 	if err != nil {
 		handler.SendResponse(c, errno.ErrToken, nil)
 		return
 	}
-	handler.SendResponse(c, nil, model.Token{Token: t})
+	handler.SendResponse(c, nil, model.Token{AccessToken: t, RefreshToken: r})
 
 }

@@ -13,39 +13,42 @@ type Config struct {
 }
 
 const (
-	MINEPIN_DEBUG_SUFFIX     = "_debug"
-	MINEPIN_PORT             = "port"
-	MINEPIN_MAX_PING_COUNT   = "max_ping_count"
-	MINEPIN_RUNMODE          = "runmode"
-	MINEPIN_DB_TYPE          = "db.type"
-	MINEPIN_DB_NAME          = "db.name"
-	MINEPIN_DB_ADDR          = "db.addr"
-	MINEPIN_DB_USERNAME      = "db.username"
-	MINEPIN_DB_PASSWORD      = "db.password"
-	MINEPIN_LOG_LEVEL        = "log.level"
-	MINEPIN_LOG_FILE_NAME    = "log.file_name"
-	MINEPIN_LOG_MAX_SIZE_MB  = "log.max_size_mb"
-	MINEPIN_LOG_MAX_FILE_NUM = "log.max_file_num"
-	MINEPIN_LOG_MAX_FILE_DAY = "log.max_file_day"
-	MINEPIN_LOG_COMPRESS     = "log.compress"
-	MINEPIN_LOG_STDOUT       = "log.stdout"
-	MINEPIN_LOG_ONLY_STDOUT  = "log.only_stdout"
+	MINEPIN_DEBUG_SUFFIX       = "_debug"
+	MINEPIN_PORT               = "port"
+	MINEPIN_MAX_PING_COUNT     = "max_ping_count"
+	MINEPIN_RUNMODE            = "runmode"
+	MINEPIN_JWT_ACCESS_SECRET  = "jwt.access_secret"
+	MINEPIN_JWT_REFRESH_SECRET = "jwt.refresh_token"
+	MINEPIN_DB_TYPE            = "db.type"
+	MINEPIN_DB_NAME            = "db.name"
+	MINEPIN_DB_ADDR            = "db.addr"
+	MINEPIN_DB_USERNAME        = "db.username"
+	MINEPIN_DB_PASSWORD        = "db.password"
+	MINEPIN_LOG_LEVEL          = "log.level"
+	MINEPIN_LOG_FILE_NAME      = "log.file_name"
+	MINEPIN_LOG_MAX_SIZE_MB    = "log.max_size_mb"
+	MINEPIN_LOG_MAX_FILE_NUM   = "log.max_file_num"
+	MINEPIN_LOG_MAX_FILE_DAY   = "log.max_file_day"
+	MINEPIN_LOG_COMPRESS       = "log.compress"
+	MINEPIN_LOG_STDOUT         = "log.stdout"
+	MINEPIN_LOG_ONLY_STDOUT    = "log.only_stdout"
 
 	MINEPIN_DEFAULT_CONFIG_PATH = "./"
 	MINEPIN_DEFAULT_CONFIG_NAME = "config"
 	MINEPIN_DEFAULT_CONFIG_TYPE = "yaml"
 	MINEPIN_DEFAULT_CONFIG_FILE = MINEPIN_DEFAULT_CONFIG_PATH + MINEPIN_DEFAULT_CONFIG_NAME +
 		POINT + MINEPIN_DEFAULT_CONFIG_TYPE
-	MINEPIN_DEFAULT_PORT            = "8080"
-	MINEPIN_DEFAULT_MAX_PING_COUNT  = 3
-	MINEPIN_DEFAULT_RUNMODE         = "release"
-	MINEPIN_DEFAULT_DB_TYPE         = "sqlite3"
-	MINEPIN_DEFAULT_DB_ADDR         = "./minepin.db"
-	MINEPIN_DEFAULT_LOG_LEVEL       = "info"
-	MINEPIN_DEFAULT_LOG_COMPRESS    = false
-	MINEPIN_DEFAULT_LOG_ONLY_STDOUT = true
-
-	POINT = "."
+	MINEPIN_DEFAULT_PORT               = "8080"
+	MINEPIN_DEFAULT_MAX_PING_COUNT     = 3
+	MINEPIN_DEFAULT_RUNMODE            = "release"
+	MINEPIN_DEFAULT_DB_TYPE            = "sqlite3"
+	MINEPIN_DEFAULT_DB_ADDR            = "./minepin.db"
+	MINEPIN_DEFAULT_LOG_LEVEL          = "info"
+	MINEPIN_DEFAULT_LOG_COMPRESS       = false
+	MINEPIN_DEFAULT_LOG_ONLY_STDOUT    = true
+	MINEPIN_DEFAULT_JWT_ACCESS_SECRET  = "c4ce87cb12d0d6a65458c0cb38779cec"
+	MINEPIN_DEFAULT_JWT_REFRESH_SECRET = "25e0aacbe8e52824bfb397e569f0ab16e1005c397540c95b277df27eaec97ff6"
+	POINT                              = "."
 )
 
 func (c *Config) initConfig() error {
@@ -63,7 +66,7 @@ func (c *Config) initConfig() error {
 	viper.SetEnvKeyReplacer(replacer)
 
 	// 设定一些默认值
-	viper.SetDefault(MINEPIN_PORT, MINEPIN_DEFAULT_PORT) // MINEPIN_RUNMODE=debug
+	viper.SetDefault(MINEPIN_PORT, MINEPIN_DEFAULT_PORT)
 	viper.SetDefault(MINEPIN_MAX_PING_COUNT, MINEPIN_DEFAULT_MAX_PING_COUNT)
 	viper.SetDefault(MINEPIN_RUNMODE, MINEPIN_DEFAULT_RUNMODE)
 	viper.SetDefault(MINEPIN_DB_TYPE, MINEPIN_DEFAULT_DB_TYPE)
@@ -71,6 +74,8 @@ func (c *Config) initConfig() error {
 	viper.SetDefault(MINEPIN_LOG_LEVEL, MINEPIN_DEFAULT_LOG_LEVEL)
 	viper.SetDefault(MINEPIN_LOG_COMPRESS, MINEPIN_DEFAULT_LOG_COMPRESS)
 	viper.SetDefault(MINEPIN_LOG_ONLY_STDOUT, MINEPIN_DEFAULT_LOG_ONLY_STDOUT)
+	viper.SetDefault(MINEPIN_JWT_ACCESS_SECRET, MINEPIN_DEFAULT_JWT_ACCESS_SECRET)
+	viper.SetDefault(MINEPIN_JWT_REFRESH_SECRET, MINEPIN_DEFAULT_JWT_REFRESH_SECRET)
 
 	if isExist, _ := utils.PathExists(MINEPIN_DEFAULT_CONFIG_FILE); !isExist {
 		return nil
@@ -116,9 +121,11 @@ func MPDSx() string {
 	}
 }
 
-func GetMinePinPort() string      { return GetString(MINEPIN_PORT + MPDSx()) }
-func GetMinePinRunMode() string   { return GetString(MINEPIN_RUNMODE) }
-func GetMinePinMaxPingCount() int { return GetInt(MINEPIN_MAX_PING_COUNT) }
+func GetMinePinPort() string             { return GetString(MINEPIN_PORT + MPDSx()) }
+func GetMinePinRunMode() string          { return GetString(MINEPIN_RUNMODE) }
+func GetMinePinMaxPingCount() int        { return GetInt(MINEPIN_MAX_PING_COUNT) }
+func GetMinePinJwtAccessSecret() string  { return GetString(MINEPIN_JWT_ACCESS_SECRET) }
+func GetMinePinJwtRefreshSecret() string { return GetString(MINEPIN_JWT_REFRESH_SECRET) }
 
 func GetMinePinLogLevel() string    { return GetString(MINEPIN_LOG_LEVEL) }
 func GetMinePinLogFileName() string { return GetString(MINEPIN_LOG_FILE_NAME) }

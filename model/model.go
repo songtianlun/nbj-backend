@@ -15,7 +15,8 @@ type BaseModel struct {
 }
 
 type Token struct {
-	Token string `json:"token"`
+	AccessToken  string `json:"access_token"`
+	RefreshToken string `json:"refresh_token"`
 }
 
 func (bm *BaseModel) BeforeCreate(tx *gorm.DB) (err error) {

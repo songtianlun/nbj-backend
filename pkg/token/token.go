@@ -1,6 +1,7 @@
 package token
 
 import (
+	"encoding/base64"
 	"errors"
 	"fmt"
 	"github.com/dgrijalva/jwt-go"
@@ -12,31 +13,46 @@ import (
 
 var (
 	// ErrMissingHeader means the `Authorization` header was empty.
-	ErrMissingHeader = errors.New("The length of the `Authorization` header is zero.")
+	ErrMissingHeader = errors.New("the length of the `Authorization` header is zero")
 )
 
 // Context is the context of the JSON web token.
 type Context struct {
 	Role model.UserType // 用户角色
 	UUID string         // 用户 UUID
-	nbf  int64          // JWT Token 生效时间
-	iat  int64          // JWT Token 签发时间
-	exp  int64          // JWT Token 过期时间
+	//nbf  int64          // JWT Token 生效时间
+	//iat  int64          // JWT Token 签发时间
+	//exp  int64          // JWT Token 过期时间
 }
 
-func Sign(c Context, secret string) (tokenString string, err error) {
-	if secret == "" {
-		secret = config.GetString("jwt_secret")
-	}
+func Sign(c Context) (accessTokenString string, refreshTokenString string, err error) {
 	// The token content.
-	token := jwt.NewWithClaims(jwt.SigningMethodHS256, jwt.MapClaims{
+	aToken := jwt.NewWithClaims(jwt.SigningMethodHS256, jwt.MapClaims{
 		"uuid": c.UUID,
 		"role": c.Role,
-		"nbf":  time.Now().Unix(),
-		"iat":  time.Now().Unix(),
-		"exp":  time.Now().Unix() + 20,
+		"nbf":  time.Now().Unix(),                       // JWT Token 生效时间
+		"iat":  time.Now().Unix(),                       // JWT Token 签发时间
+		"exp":  time.Now().Add(time.Minute * 15).Unix(), // JWT Token 过期时间
 	})
-	tokenString, err = token.SignedString([]byte(secret))
+	accessTokenString, err = aToken.SignedString([]byte(config.GetMinePinJwtAccessSecret()))
+	if err != nil {
+		return "", "", err
+	}
+	accessTokenString = base64.URLEncoding.EncodeToString([]byte(accessTokenString))
+
+	rToken := jwt.NewWithClaims(jwt.SigningMethodHS256, jwt.MapClaims{
+		"uuid": c.UUID,
+		"role": c.Role,
+		"nbf":  time.Now().Unix(),                         // JWT Token 生效时间
+		"iat":  time.Now().Unix(),                         // JWT Token 签发时间
+		"exp":  time.Now().Add(time.Hour * 24 * 7).Unix(), // JWT Token 过期时间
+	})
+	refreshTokenString, err = rToken.SignedString([]byte(config.GetMinePinJwtRefreshSecret()))
+	if err != nil {
+		return "", "", err
+	}
+	refreshTokenString = base64.URLEncoding.EncodeToString([]byte(refreshTokenString))
+
 	return
 }
 
@@ -80,7 +96,7 @@ func Parse(tokenString string, secret string) (*Context, error) {
 // 并将其传递给 Parse 函数以验证 token 有消息。
 func ParseRequest(c *gin.Context) (*Context, error) {
 	header := c.Request.Header.Get("Authorization")
-	secret := config.GetString("jwt_secret")
+	secret := config.GetMinePinJwtAccessSecret()
 
 	if len(header) == 0 {
 		return &Context{}, ErrMissingHeader
