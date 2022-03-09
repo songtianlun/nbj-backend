@@ -4,7 +4,7 @@ import (
 	"github.com/fsnotify/fsnotify"
 	"github.com/gin-gonic/gin"
 	"github.com/spf13/viper"
-	"os"
+	"minepin-backend/utils"
 	"strings"
 )
 
@@ -31,35 +31,48 @@ const (
 	MINEPIN_LOG_STDOUT       = "log.stdout"
 	MINEPIN_LOG_ONLY_STDOUT  = "log.only_stdout"
 
-	MINEPIN_DEFAULT_PORT           = "8080"
-	MINEPIN_DEFAULT_MAX_PING_COUNT = 3
-	MINEPIN_DEFAULT_RUNMODE        = "release"
-	MINEPIN_DEFAULT_DB_TYPE        = "sqlite3"
-	MINEPIN_DEFAULT_DB_ADDR        = "./minepin.db"
+	MINEPIN_DEFAULT_CONFIG_PATH = "./"
+	MINEPIN_DEFAULT_CONFIG_NAME = "config"
+	MINEPIN_DEFAULT_CONFIG_TYPE = "yaml"
+	MINEPIN_DEFAULT_CONFIG_FILE = MINEPIN_DEFAULT_CONFIG_PATH + MINEPIN_DEFAULT_CONFIG_NAME +
+		POINT + MINEPIN_DEFAULT_CONFIG_TYPE
+	MINEPIN_DEFAULT_PORT            = "8080"
+	MINEPIN_DEFAULT_MAX_PING_COUNT  = 3
+	MINEPIN_DEFAULT_RUNMODE         = "release"
+	MINEPIN_DEFAULT_DB_TYPE         = "sqlite3"
+	MINEPIN_DEFAULT_DB_ADDR         = "./minepin.db"
+	MINEPIN_DEFAULT_LOG_LEVEL       = "info"
+	MINEPIN_DEFAULT_LOG_COMPRESS    = false
+	MINEPIN_DEFAULT_LOG_ONLY_STDOUT = true
+
+	POINT = "."
 )
 
 func (c *Config) initConfig() error {
 	if c.Name != "" {
 		viper.SetConfigFile(c.Name)
-	} else {
-		viper.AddConfigPath("./")
-		viper.SetConfigName("config")
+	} else if isExist, _ := utils.PathExists(MINEPIN_DEFAULT_CONFIG_FILE); isExist {
+		viper.AddConfigPath(MINEPIN_DEFAULT_CONFIG_PATH)
+		viper.SetConfigName(MINEPIN_DEFAULT_CONFIG_NAME)
+		viper.SetConfigType(MINEPIN_DEFAULT_CONFIG_TYPE)
 	}
-	viper.SetConfigType("yaml")
+
 	viper.AutomaticEnv()          // 读取匹配的环境变量，环境变量优先级最高
 	viper.SetEnvPrefix("MINEPIN") // 读取环境变量的前缀为 MINEPIN
 	replacer := strings.NewReplacer(".", "_")
 	viper.SetEnvKeyReplacer(replacer)
 
 	// 设定一些默认值
-	viper.SetDefault(MINEPIN_PORT, MINEPIN_DEFAULT_PORT)
+	viper.SetDefault(MINEPIN_PORT, MINEPIN_DEFAULT_PORT) // MINEPIN_RUNMODE=debug
 	viper.SetDefault(MINEPIN_MAX_PING_COUNT, MINEPIN_DEFAULT_MAX_PING_COUNT)
 	viper.SetDefault(MINEPIN_RUNMODE, MINEPIN_DEFAULT_RUNMODE)
 	viper.SetDefault(MINEPIN_DB_TYPE, MINEPIN_DEFAULT_DB_TYPE)
 	viper.SetDefault(MINEPIN_DB_ADDR, MINEPIN_DEFAULT_DB_ADDR)
+	viper.SetDefault(MINEPIN_LOG_LEVEL, MINEPIN_DEFAULT_LOG_LEVEL)
+	viper.SetDefault(MINEPIN_LOG_COMPRESS, MINEPIN_DEFAULT_LOG_COMPRESS)
+	viper.SetDefault(MINEPIN_LOG_ONLY_STDOUT, MINEPIN_DEFAULT_LOG_ONLY_STDOUT)
 
-	_, err := os.Stat("./config.yaml")
-	if err != nil && os.IsNotExist(err) {
+	if isExist, _ := utils.PathExists(MINEPIN_DEFAULT_CONFIG_FILE); !isExist {
 		return nil
 	}
 	if err := viper.ReadInConfig(); err != nil {
@@ -84,7 +97,7 @@ func Init(cfg string) error {
 		return err
 	}
 
-	c.watchConfig()
+	//c.watchConfig() // 热加载当前无意义，且会在配置文件不存在时阻塞，暂时移除
 
 	return nil
 }
