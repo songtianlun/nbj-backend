@@ -7,16 +7,11 @@ import (
 )
 
 type BaseModel struct {
-	Id        uint64     `gorm:"column:id;AUTO_INCREMENT;comment:序号;unique" `
-	UUID      string     `gorm:"primary_key;not null;column:uuid;unique" json:"-"`
+	Id        uint64     `gorm:"primary_key;column:id;AUTO_INCREMENT;comment:序号;unique" `
+	UUID      string     `gorm:"not null;column:uuid;unique" json:"-"`
 	CreatedAt time.Time  `gorm:"column:createdAt" json:"-"`
 	UpdatedAt time.Time  `gorm:"column:updatedAt" json:"-"`
 	DeletedAt *time.Time `gorm:"column:deletedAt" sql:"index" json:"-"`
-}
-
-type Token struct {
-	AccessToken  string `json:"access_token"`
-	RefreshToken string `json:"refresh_token"`
 }
 
 func (bm *BaseModel) BeforeCreate(tx *gorm.DB) (err error) {

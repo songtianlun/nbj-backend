@@ -6,6 +6,9 @@ Dev deploy with [render](https://render.com).
 
 ```bash
 cp ./conf/config.sample.yaml ./conf/config.yaml
+# use [air](https://github.com/cosmtrek/air)
+$ curl -sSfL https://raw.githubusercontent.com/cosmtrek/air/master/install.sh | sh -s -- -b $(go env GOPATH)/bin
+$ air
 ```
 
 ## Libs

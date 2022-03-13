@@ -19,19 +19,28 @@ func Load(g *gin.Engine, mw ...gin.HandlerFunc) *gin.Engine {
 		c.String(http.StatusNotFound, "The incorrect API route.")
 	})
 
+	// Say Hello
 	g.GET("/", func(c *gin.Context) {
 		c.JSON(200, "hello, this is MinePin backend.")
 	})
 
+	// login/register
 	g.POST("/login", user.Login)
 	g.POST("/register", user.Create)
-
-	u := g.Group("/v1/user")
-	u.Use(middleware.AuthMiddleware())
+	// v1 api
+	v1 := g.Group("/v1")
+	// v1 api for user
+	v1u := v1.Group("/user")
+	v1u.Use(middleware.AuthMiddleware())
 	{
-		u.GET("", user.List)
+		v1u.GET("", user.List)
+	}
+	v1u.Use(middleware.AuthRefreshTokenMiddleware())
+	{
+		v1u.POST("/:id/refresh")
 	}
 
+	// system status description
 	gsd := g.Group("/sd")
 	{
 		gsd.GET("/health", sd.HealthCheck)

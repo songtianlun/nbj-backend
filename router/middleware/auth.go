@@ -17,3 +17,14 @@ func AuthMiddleware() gin.HandlerFunc {
 		c.Next()
 	}
 }
+
+func AuthRefreshTokenMiddleware() gin.HandlerFunc {
+	return func(c *gin.Context) {
+		if _, err := token.ParseRefreshTokenRequest(c); err != nil {
+			handler.SendResponse(c, err, nil)
+			c.Abort()
+			return
+		}
+		c.Next()
+	}
+}

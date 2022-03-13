@@ -1,6 +1,7 @@
 package config
 
 import (
+	"fmt"
 	"github.com/fsnotify/fsnotify"
 	"github.com/gin-gonic/gin"
 	"github.com/spf13/viper"
@@ -54,7 +55,9 @@ const (
 func (c *Config) initConfig() error {
 	if c.Name != "" {
 		viper.SetConfigFile(c.Name)
+		fmt.Printf("run with abstract config %s\n", c.Name)
 	} else if isExist, _ := utils.PathExists(MINEPIN_DEFAULT_CONFIG_FILE); isExist {
+		fmt.Printf("run with default config %s\n", MINEPIN_DEFAULT_CONFIG_FILE)
 		viper.AddConfigPath(MINEPIN_DEFAULT_CONFIG_PATH)
 		viper.SetConfigName(MINEPIN_DEFAULT_CONFIG_NAME)
 		viper.SetConfigType(MINEPIN_DEFAULT_CONFIG_TYPE)

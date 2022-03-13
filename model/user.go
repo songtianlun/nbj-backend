@@ -16,13 +16,13 @@ const (
 	VISITOR UserType = 0
 	USER    UserType = 1
 	VIP     UserType = 2
-	ADMIN   UserType = 3
+	ADMIN   UserType = 10
 )
 
 type UserModel struct {
 	BaseModel
-	Email    string   `json:"email" gorm:"column:email;unique" validate:"max=64"`
-	Phone    string   `json:"phone" gorm:"column:phone;unique" validate:"max=16"`
+	Email    string   `json:"email" gorm:"column:email;primary_key;default:-" validate:"max=64"`
+	Phone    string   `json:"phone" gorm:"column:phone;primary_key;default:-" validate:"max=16"`
 	Password string   `json:"password" gorm:"column:password;not null" validate:"min=5,max=128"`
 	Nickname string   `json:"nickname" gorm:"column:nickname;not null;default:-" validate:"min=1,max=128"`
 	Role     UserType `json:"role" gorm:"column:role;default:1"`
@@ -41,8 +41,8 @@ type UserInfo struct {
 	Nickname  string   `json:"nickname"`
 	Role      UserType `json:"role"`
 	SayHello  string   `json:"sayHello"`
-	CreatedAt string   `gorm:"column:createdAt" json:"-"`
-	UpdatedAt string   `gorm:"column:updatedAt" json:"-"`
+	CreatedAt string   `json:"-"`
+	UpdatedAt string   `json:"-"`
 }
 
 type UserList struct {

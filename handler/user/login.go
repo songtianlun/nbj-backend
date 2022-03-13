@@ -27,9 +27,10 @@ func Login(c *gin.Context) {
 		return
 	}
 
-	t, r, err := token.Sign(token.Context{
-		UUID: d.UUID,
-		Role: d.Role,
+	t, r, err := token.Sign(token.Claims{
+		URole: d.Role,
+		UID:   d.Id,
+		UName: d.Nickname,
 	})
 	if err != nil {
 		handler.SendResponse(c, errno.ErrToken, nil)
