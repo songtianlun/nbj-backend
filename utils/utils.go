@@ -1,6 +1,10 @@
 package utils
 
-import "os"
+import (
+	"github.com/gin-gonic/gin"
+	"os"
+	"strings"
+)
 
 func PathExists(path string) (bool, error) {
 	_, err := os.Stat(path)
@@ -11,4 +15,8 @@ func PathExists(path string) (bool, error) {
 		return false, nil
 	}
 	return false, err
+}
+
+func GetAddrFromContext(c *gin.Context) (addr string) {
+	return strings.Split(c.Request.RemoteAddr, ":")[0]
 }

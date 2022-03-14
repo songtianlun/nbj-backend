@@ -3,6 +3,7 @@ package router
 import (
 	"github.com/gin-gonic/gin"
 	"minepin-backend/handler/sd"
+	"minepin-backend/handler/token"
 	"minepin-backend/handler/user"
 	"minepin-backend/router/middleware"
 	"net/http"
@@ -27,6 +28,12 @@ func Load(g *gin.Engine, mw ...gin.HandlerFunc) *gin.Engine {
 	// login/register
 	g.POST("/login", user.Login)
 	g.POST("/register", user.Create)
+	gr := g.Group("/:id/refresh")
+	gr.Use(middleware.AuthRefreshTokenMiddleware())
+	{
+		gr.GET("", token.RefreshToken)
+	}
+
 	// v1 api
 	v1 := g.Group("/v1")
 	// v1 api for user
@@ -34,10 +41,6 @@ func Load(g *gin.Engine, mw ...gin.HandlerFunc) *gin.Engine {
 	v1u.Use(middleware.AuthMiddleware())
 	{
 		v1u.GET("", user.List)
-	}
-	v1u.Use(middleware.AuthRefreshTokenMiddleware())
-	{
-		v1u.POST("/:id/refresh")
 	}
 
 	// system status description

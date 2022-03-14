@@ -7,6 +7,7 @@ import (
 	"minepin-backend/pkg/auth"
 	"minepin-backend/pkg/errno"
 	"minepin-backend/pkg/token"
+	"minepin-backend/utils"
 )
 
 func Login(c *gin.Context) {
@@ -31,11 +32,25 @@ func Login(c *gin.Context) {
 		URole: d.Role,
 		UID:   d.Id,
 		UName: d.Nickname,
+		UAddr: utils.GetAddrFromContext(c),
 	})
 	if err != nil {
 		handler.SendResponse(c, errno.ErrToken, nil)
 		return
 	}
-	handler.SendResponse(c, nil, model.Token{AccessToken: t, RefreshToken: r})
 
+	go func() {
+		log := model.UserLoginLog{
+			UserUID:      d.Id,
+			UserName:     d.Nickname,
+			AccessToken:  t,
+			RefreshToken: r,
+			UserAddr:     utils.GetAddrFromContext(c),
+		}
+		if err = log.Create(); err != nil {
+			return
+		}
+	}()
+
+	handler.SendResponse(c, nil, model.Token{UserID: d.Id, AccessToken: t, RefreshToken: r})
 }

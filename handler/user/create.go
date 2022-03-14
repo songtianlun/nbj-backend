@@ -28,6 +28,12 @@ func Create(c *gin.Context) {
 		return
 	}
 
+	if err := u.Check(); err != nil {
+		handler.SendResponse(c, err, nil)
+		logger.Error("error for check user - %s", err.Error())
+		return
+	}
+
 	if err := u.Encrypt(); err != nil {
 		handler.SendResponse(c, errno.ErrEncrypt, nil)
 		return

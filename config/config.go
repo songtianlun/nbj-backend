@@ -19,7 +19,7 @@ const (
 	MINEPIN_MAX_PING_COUNT     = "max_ping_count"
 	MINEPIN_RUNMODE            = "runmode"
 	MINEPIN_JWT_ACCESS_SECRET  = "jwt.access_secret"
-	MINEPIN_JWT_REFRESH_SECRET = "jwt.refresh_token"
+	MINEPIN_JWT_REFRESH_SECRET = "jwt.refresh_secret"
 	MINEPIN_DB_TYPE            = "db.type"
 	MINEPIN_DB_NAME            = "db.name"
 	MINEPIN_DB_ADDR            = "db.addr"

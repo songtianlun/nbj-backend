@@ -5,6 +5,7 @@ import (
 	"gorm.io/gorm"
 	"minepin-backend/pkg/auth"
 	"minepin-backend/pkg/constvar"
+	"minepin-backend/pkg/errno"
 	"minepin-backend/pkg/logger"
 	"regexp"
 	"sync"
@@ -35,7 +36,6 @@ type UserBind struct {
 
 type UserInfo struct {
 	ID        uint64   `json:"id"`
-	UUID      string   `json:"uuid"`
 	Email     string   `json:"email"`
 	Phone     string   `json:"phone"`
 	Nickname  string   `json:"nickname"`
@@ -52,6 +52,24 @@ type UserList struct {
 
 func (u *UserModel) Create() error {
 	return DB.DB.Create(&u).Error
+}
+
+func (u *UserModel) Check() error {
+	var user []UserModel
+	if u.Email != "" {
+		DB.DB.Where("email = ?", u.Email).Find(&user)
+		if len(user) != 0 {
+			return errno.ErrUserEmail
+		}
+	} else if u.Phone != "" {
+		DB.DB.Where("phone = ?", u.Phone).Find(&user)
+		if len(user) != 0 {
+			return errno.ErrUserEmail
+		}
+	} else {
+		return errno.ErrDatabase
+	}
+	return nil
 }
 
 func (u *UserModel) Encrypt() (err error) {
@@ -78,6 +96,15 @@ func GetUser(username string) (*UserModel, error) {
 		logger.Debug("Login with phone: " + username)
 		d = DB.DB.Where("phone = ?", username).First(&u)
 	}
+
+	return u, d.Error
+}
+
+func GetUserByID(uid uint64) (*UserModel, error) {
+	var d *gorm.DB
+	u := &UserModel{}
+
+	d = DB.DB.First(&u, uid)
 
 	return u, d.Error
 }

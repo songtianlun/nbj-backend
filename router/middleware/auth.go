@@ -18,6 +18,7 @@ func AuthMiddleware() gin.HandlerFunc {
 	}
 }
 
+// AuthRefreshTokenMiddleware 验证 RefreshToken，验后即焚
 func AuthRefreshTokenMiddleware() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		if _, err := token.ParseRefreshTokenRequest(c); err != nil {

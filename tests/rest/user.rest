@@ -1,7 +1,13 @@
 # curl -XPOST -H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE1MjgwMTY5MjIsImlkIjowLCJuYmYiOjE1MjgwMTY5MjIsInVzZXJuYW1lIjoiYWRtaW4ifQ.LjxrK9DuAwAzUD8-9v43NzWBN7HXsSLfebw92DKd1JQ" -H "Content-Type: application/json" http://127.0.0.1:8080/v1/user -d'{"username":"user1","password":"user1234"}'
-GET http://127.0.0.1:6001/v1/user/
-Authorization: Bearer ZXlKaGJHY2lPaUpJVXpJMU5pSXNJblI1Y0NJNklrcFhWQ0o5LmV5SmxlSEFpT2pFMk5EWTVNRFF3TkRjc0ltbGhkQ0k2TVRZME5qa3dNekUwTnl3aWJtSm1Jam94TmpRMk9UQXpNVFEzTENKeWIyeGxJam94TENKMWRXbGtJam9pTXpjM05UUm1aREF0WW1OaU9DMDBZbVF6TFRsbFlqVXRPVFJqTURnNU1XWXpabUUySW4wLnVkZjl3OWR2Sl81WVNVU2NjU0lyZUNoU05fZm5xMThVX3FyUXk5MEhDRGc=
+GET http://127.0.0.1:6001/v1/user
+Authorization: Bearer ZXlKaGJHY2lPaUpJVXpJMU5pSXNJblI1Y0NJNklrcFhWQ0o5LmV5SjFYM0p2YkdVaU9qRXNJblZwWkNJNk1pd2lkVjl1WVcxbElqb2lZV1J0YVc0eElpd2lkVjloWkdSeUlqb2lNVEkzTGpBdU1DNHhJaXdpWlhod0lqb3hOalEzTWpjek1qWTVMQ0pwWVhRaU9qRTJORGN5TnpJek5qa3NJbTVpWmlJNk1UWTBOekkzTWpNMk9YMC40bFZUcTV3cUEtWG1obGk0eFo2S2VPUEphT1AwNlpUNEMtZ0Ntcmw3cnhV
 Content-Type: application/json
+
+###
+
+# curl -XPOST -H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE1MjgwMTY5MjIsImlkIjowLCJuYmYiOjE1MjgwMTY5MjIsInVzZXJuYW1lIjoiYWRtaW4ifQ.LjxrK9DuAwAzUD8-9v43NzWBN7HXsSLfebw92DKd1JQ" -H "Content-Type: application/json" http://127.0.0.1:8080/v1/user -d'{"username":"user1","password":"user1234"}'
+GET http://127.0.0.1:6001/2/refresh
+Authorization: Bearer ZXlKaGJHY2lPaUpJVXpJMU5pSXNJblI1Y0NJNklrcFhWQ0o5LmV5SjFYM0p2YkdVaU9qRXNJblZwWkNJNk1pd2lkVjl1WVcxbElqb2lZV1J0YVc0eElpd2lkVjloWkdSeUlqb2lNVEkzTGpBdU1DNHhJaXdpWlhod0lqb3hOalEzT0RjNU16YzFMQ0pwWVhRaU9qRTJORGN5TnpRMU56VXNJbTVpWmlJNk1UWTBOekkzTkRVM05YMC5RbkF2Nk1iWVpOMkQ5Vk9XY1FEUGFtNXo4d1d4U3AycGRqMEVHWVlWU2s0
 
 ###
 
@@ -17,6 +23,6 @@ Content-Type: application/json
 POST http://127.0.0.1:6001/register/
 Content-Type: application/json
 
-{"nickname":"admin1","password":"123456", "email":"stl@frytea.com"}
+{"nickname":"admin1","password":"123456", "email":"stl@frytea.com","phone": "18000000000"}
 
 

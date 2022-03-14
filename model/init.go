@@ -32,9 +32,17 @@ func openMySqlDB(path string) *gorm.DB {
 	if err != nil {
 		panic("failed to connect with MySQL - " + err.Error())
 	}
-	err = db.AutoMigrate(&UserModel{})
-	if err != nil {
-		panic("fail to auto migrate db: " + err.Error())
+	if err = db.AutoMigrate(&UserModel{}); err != nil {
+		panic("fail to auto migrate [User] db: " + err.Error())
+	}
+	//if err = db.AutoMigrate(&UserATokenModel{}); err != nil {
+	//	panic("fail to auto migrate [UserAccessToken] db: " + err.Error())
+	//}
+	if err = db.AutoMigrate(&UserRTokenModel{}); err != nil {
+		panic("fail to auto migrate [UserRTokenModel] db: " + err.Error())
+	}
+	if err = db.AutoMigrate(&UserLoginLog{}); err != nil {
+		panic("fail to auto migrate [UserLoginLog] db: " + err.Error())
 	}
 	return db
 }

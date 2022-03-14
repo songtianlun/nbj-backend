@@ -8,6 +8,9 @@ import (
 	"github.com/gin-gonic/gin"
 	"minepin-backend/config"
 	"minepin-backend/model"
+	"minepin-backend/pkg/errno"
+	"minepin-backend/pkg/logger"
+	"minepin-backend/utils"
 	"time"
 )
 
@@ -16,75 +19,103 @@ var (
 	ErrMissingHeader = errors.New("the length of the `Authorization` header is zero")
 )
 
-// Context is the context of the JSON web token.
-type Context struct {
-	Role model.UserType // 用户角色
-	UUID string         // 用户 UUID
-	//nbf  int64          // JWT Token 生效时间
-	//iat  int64          // JWT Token 签发时间
-	//exp  int64          // JWT Token 过期时间
-}
-
 type Claims struct {
 	URole model.UserType `json:"u_role"` // 用户角色
 	UID   uint64         `json:"uid"`    // 用户 ID
-	UName string         `json:"u_name"`
+	UName string         `json:"u_name"` // 用户 nickname
+	UAddr string         `json:"u_addr"` // 用户 addr
 	jwt.StandardClaims
 }
 
-func Sign(c Claims) (accessTokenString string, refreshTokenString string, err error) {
-	// The token content.
-	aToken := jwt.NewWithClaims(jwt.SigningMethodHS256, Claims{
-		URole: c.URole,
-		UID:   c.UID,
-		UName: c.UName,
-		StandardClaims: jwt.StandardClaims{
-			Audience:  c.UName,
-			ExpiresAt: time.Now().Add(time.Minute * 15).Unix(),
-			IssuedAt:  time.Now().Unix(),
-			NotBefore: time.Now().Unix(),
-		},
-	})
-	accessTokenString, err = aToken.SignedString([]byte(config.GetMinePinJwtAccessSecret()))
-	if err != nil {
-		return "", "", err
+func SignWithClaims(c Claims, sc jwt.StandardClaims, s string) (TokenS string, err error) {
+	if (jwt.StandardClaims{} != sc) {
+		c.StandardClaims = sc
 	}
-	accessTokenString = base64.URLEncoding.EncodeToString([]byte(accessTokenString))
+	Token := jwt.NewWithClaims(jwt.SigningMethodHS256, c)
+	TokenS, err = Token.SignedString([]byte(s))
+	if err != nil {
+		return "", err
+	}
+	TokenS = base64.URLEncoding.EncodeToString([]byte(TokenS))
+	return
+}
 
-	rToken := jwt.NewWithClaims(jwt.SigningMethodHS256, Claims{
-		URole: c.URole,
-		UID:   c.UID,
-		UName: c.UName,
-		StandardClaims: jwt.StandardClaims{
-			Audience:  "",
-			ExpiresAt: time.Now().Add(time.Hour * 24 * 7).Unix(),
-			IssuedAt:  time.Now().Unix(),
-			NotBefore: time.Now().Unix(),
-		},
-	})
-	refreshTokenString, err = rToken.SignedString([]byte(config.GetMinePinJwtRefreshSecret()))
+func SignAccessToken(c Claims) (accessTokenString string, err error) {
+	startTime := time.Now()
+	atExpiresAt := time.Now().Add(time.Minute * 15)
+
+	accessTokenString, err = SignWithClaims(c, jwt.StandardClaims{
+		ExpiresAt: atExpiresAt.Unix(),
+		IssuedAt:  startTime.Unix(),
+		NotBefore: startTime.Unix(),
+	}, config.GetMinePinJwtAccessSecret())
 	if err != nil {
-		return "", "", err
+		return "", err
 	}
-	refreshTokenString = base64.URLEncoding.EncodeToString([]byte(refreshTokenString))
+
+	//access := model.UserATokenModel{
+	//	AccessToken: accessTokenString,
+	//	UserUID:     c.UID,
+	//	ExpiresAt:   atExpiresAt,
+	//	IssuedAt:    startTime,
+	//	NotBefore:   startTime,
+	//}
+	//
+	//if err = access.RegisterAccessToken(); err != nil {
+	//	return "", err
+	//}
 
 	return
 }
 
-//func SignWithRefresh(c Context) (accessTokenString string, err error) {
-//	aToken := jwt.NewWithClaims(jwt.SigningMethodHS256, jwt.MapClaims{
-//		"uuid": c.UUID,
-//		"role": c.Role,
-//		"nbf":  time.Now().Unix(),                       // JWT Token 生效时间
-//		"iat":  time.Now().Unix(),                       // JWT Token 签发时间
-//		"exp":  time.Now().Add(time.Minute * 15).Unix(), // JWT Token 过期时间
-//	})
-//	accessTokenString, err = aToken.SignedString([]byte(config.GetMinePinJwtAccessSecret()))
-//	if err != nil {
-//		return "", err
-//	}
-//	accessTokenString = base64.URLEncoding.EncodeToString([]byte(accessTokenString))
-//	return
+func SignRefreshToken(c Claims) (refreshTokenString string, err error) {
+	startTime := time.Now()
+	rtExpiresAt := time.Now().Add(time.Hour * 24 * 7)
+
+	refreshTokenString, err = SignWithClaims(c, jwt.StandardClaims{
+		ExpiresAt: rtExpiresAt.Unix(),
+		IssuedAt:  startTime.Unix(),
+		NotBefore: startTime.Unix(),
+	}, config.GetMinePinJwtRefreshSecret())
+
+	if err != nil {
+		return "", err
+	}
+
+	refresh := model.UserRTokenModel{
+		RefreshToken: refreshTokenString,
+		UserUID:      c.UID,
+		UserAddr:     c.UAddr,
+		UserName:     c.UName,
+		ExpiresAt:    rtExpiresAt,
+		IssuedAt:     startTime,
+		NotBefore:    startTime,
+	}
+
+	if err = refresh.RegisterRefreshToken(); err != nil {
+		return "", err
+	}
+
+	logger.InfoF("register token for client [%s] ", c.UAddr)
+
+	return
+}
+
+func Sign(c Claims) (accessTokenString string, refreshTokenString string, err error) {
+	accessTokenString, err = SignAccessToken(c)
+	if err != nil {
+		return "", "", err
+	}
+	refreshTokenString, err = SignRefreshToken(c)
+	if err != nil {
+		return "", "", err
+	}
+
+	return
+}
+
+//func SignWithRefresh(c *gin.Context) (*Claims, error) {
+//
 //}
 
 // secretFunc 验证密钥格式
@@ -97,18 +128,20 @@ func secretFunc(secret string) jwt.Keyfunc {
 	}
 }
 
-// Parse 使用指定的 secret 验证 token ，有效则
-// 返回上下文。
-func Parse(tokenString string, secret string) (*Context, error) {
-	ctx := &Context{}
+// Parse 使用指定的 secret 验证 token ，有效则返回 token 内容。
+func Parse(tokenString string, secret string) (*Claims, error) {
+	ctx := &Claims{}
 
 	token, err := jwt.Parse(tokenString, secretFunc(secret))
 
 	if err != nil {
+		logger.ErrorF("Parse Token error with err: %s", err.Error())
 		return ctx, err
 	} else if claims, ok := token.Claims.(jwt.MapClaims); ok && token.Valid {
-		ctx.UUID = claims["uuid"].(string)
-		ctx.Role = model.UserType(claims["role"].(float64))
+		ctx.UID = uint64(claims["uid"].(float64))
+		ctx.URole = model.UserType(claims["u_role"].(float64))
+		ctx.UName = claims["u_name"].(string)
+		ctx.UAddr = claims["u_addr"].(string)
 
 		return ctx, nil
 	} else {
@@ -118,12 +151,12 @@ func Parse(tokenString string, secret string) (*Context, error) {
 
 // ParseRequest 从 HTTP 请求头获取 token
 // 并将其传递给 Parse 函数以验证 token 有消息。
-func ParseRequest(c *gin.Context) (*Context, error) {
+func ParseRequest(c *gin.Context) (*Claims, error) {
 	header := c.Request.Header.Get("Authorization")
 	secret := config.GetMinePinJwtAccessSecret()
 
 	if len(header) == 0 {
-		return &Context{}, ErrMissingHeader
+		return &Claims{}, ErrMissingHeader
 	}
 
 	var t string
@@ -135,17 +168,37 @@ func ParseRequest(c *gin.Context) (*Context, error) {
 
 // ParseRefreshTokenRequest 从 HTTP 请求头获取 refresh token
 // 并将其传递给 Parse 函数以验证 token 合法性。
-func ParseRefreshTokenRequest(c *gin.Context) (*Context, error) {
+func ParseRefreshTokenRequest(c *gin.Context) (*Claims, error) {
 	header := c.Request.Header.Get("Authorization")
 	secret := config.GetMinePinJwtRefreshSecret()
 
 	if len(header) == 0 {
-		return &Context{}, ErrMissingHeader
+		return &Claims{}, ErrMissingHeader
 	}
 
 	var t string
 	fmt.Sscanf(header, "Bearer %s", &t)
 	bt, _ := base64.URLEncoding.DecodeString(t)
 
-	return Parse(string(bt), secret)
+	claims, err := Parse(string(bt), secret)
+	if err != nil {
+		return nil, err
+	}
+
+	if claims.UAddr != utils.GetAddrFromContext(c) {
+		logger.ErrorF("error token from %s (%v)",
+			utils.GetAddrFromContext(c), claims.UName)
+		return nil, errno.ErrClient
+	}
+
+	if _, err = model.ReTokenEffective(t); err != nil {
+		return nil, err
+	}
+
+	// Refresh Token 仅能验证一次，验证成功颁发一组新 Token，无论成功与否该 rt 必须失效
+	if err = model.LogoutRefreshTokenWithToken(t); err != nil {
+		return nil, err
+	}
+
+	return claims, nil
 }
