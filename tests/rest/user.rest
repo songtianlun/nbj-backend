@@ -1,28 +1,50 @@
-# curl -XPOST -H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE1MjgwMTY5MjIsImlkIjowLCJuYmYiOjE1MjgwMTY5MjIsInVzZXJuYW1lIjoiYWRtaW4ifQ.LjxrK9DuAwAzUD8-9v43NzWBN7HXsSLfebw92DKd1JQ" -H "Content-Type: application/json" http://127.0.0.1:8080/v1/user -d'{"username":"user1","password":"user1234"}'
-GET http://127.0.0.1:6001/v1/user
-Authorization: Bearer ZXlKaGJHY2lPaUpJVXpJMU5pSXNJblI1Y0NJNklrcFhWQ0o5LmV5SjFYM0p2YkdVaU9qRXNJblZwWkNJNk1pd2lkVjl1WVcxbElqb2lZV1J0YVc0eElpd2lkVjloWkdSeUlqb2lNVEkzTGpBdU1DNHhJaXdpWlhod0lqb3hOalEzTWpjek1qWTVMQ0pwWVhRaU9qRTJORGN5TnpJek5qa3NJbTVpWmlJNk1UWTBOekkzTWpNMk9YMC40bFZUcTV3cUEtWG1obGk0eFo2S2VPUEphT1AwNlpUNEMtZ0Ntcmw3cnhV
+###
+POST http://127.0.0.1:6001/v1/register/
 Content-Type: application/json
 
-###
-
-# curl -XPOST -H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE1MjgwMTY5MjIsImlkIjowLCJuYmYiOjE1MjgwMTY5MjIsInVzZXJuYW1lIjoiYWRtaW4ifQ.LjxrK9DuAwAzUD8-9v43NzWBN7HXsSLfebw92DKd1JQ" -H "Content-Type: application/json" http://127.0.0.1:8080/v1/user -d'{"username":"user1","password":"user1234"}'
-GET http://127.0.0.1:6001/2/refresh
-Authorization: Bearer ZXlKaGJHY2lPaUpJVXpJMU5pSXNJblI1Y0NJNklrcFhWQ0o5LmV5SjFYM0p2YkdVaU9qRXNJblZwWkNJNk1pd2lkVjl1WVcxbElqb2lZV1J0YVc0eElpd2lkVjloWkdSeUlqb2lNVEkzTGpBdU1DNHhJaXdpWlhod0lqb3hOalEzT0RjNU16YzFMQ0pwWVhRaU9qRTJORGN5TnpRMU56VXNJbTVpWmlJNk1UWTBOekkzTkRVM05YMC5RbkF2Nk1iWVpOMkQ5Vk9XY1FEUGFtNXo4d1d4U3AycGRqMEVHWVlWU2s0
+{"nickname":"admin1","password":"123456", "email":"stl@frytea.com","phone": "18000000000"}
 
 ###
-
-# curl -XPOST -H "Content-Type: application/json" http://127.0.0.1:8080/login -d'{"username":"admin","password":"admin"}'
-POST http://127.0.0.1:6001/login
+POST http://127.0.0.1:6001/v1/login
 Content-Type: application/json
 
 {"username":"stl@frytea.com","password":"123456"}
 
 ###
-
-# curl -XPOST -H "Content-Type: application/json" http://127.0.0.1:8080/register/ -d'{"username":"admin","password":"admin"}'
-POST http://127.0.0.1:6001/register/
+GET http://127.0.0.1:6001/v1/u/a/list
+Authorization: Bearer ZXlKaGJHY2lPaUpJVXpJMU5pSXNJblI1Y0NJNklrcFhWQ0o5LmV5SjFYM0p2YkdVaU9qRXdMQ0oxYVdRaU9qSXNJblZmYm1GdFpTSTZJbUZrYldsdU1TSXNJblZmWVdSa2NpSTZJakV5Tnk0d0xqQXVNU0lzSW1WNGNDSTZNVFkwTnpNeU9EZ3hNU3dpYVdGMElqb3hOalEzTXpJM09URXhMQ0p1WW1ZaU9qRTJORGN6TWpjNU1URjkuZ041dmhmb0o2ek1nYjItbWJWSWpHVkZwWWZsbE1jWF9OQzFjS2dOc3Z6aw==
 Content-Type: application/json
 
-{"nickname":"admin1","password":"123456", "email":"stl@frytea.com","phone": "18000000000"}
+###
+GET http://127.0.0.1:6001/v1/u/2/refresh
+Authorization: Bearer ZXlKaGJHY2lPaUpJVXpJMU5pSXNJblI1Y0NJNklrcFhWQ0o5LmV5SjFYM0p2YkdVaU9qRXNJblZwWkNJNk1pd2lkVjl1WVcxbElqb2lZV1J0YVc0eElpd2lkVjloWkdSeUlqb2lNVEkzTGpBdU1DNHhJaXdpWlhod0lqb3hOalEzT1RFeU9USXpMQ0pwWVhRaU9qRTJORGN6TURneE1qTXNJbTVpWmlJNk1UWTBOek13T0RFeU0zMC5WeG9ib0tObkZRRUlHalZVaTBQQXlyTnNUY3lBNEpGY0trRGdFZGVwMng4
+
+###
+PUT http://127.0.0.1:6001/v1/u/2/pref
+Authorization: Bearer ZXlKaGJHY2lPaUpJVXpJMU5pSXNJblI1Y0NJNklrcFhWQ0o5LmV5SjFYM0p2YkdVaU9qRXNJblZwWkNJNk1pd2lkVjl1WVcxbElqb2lZV1J0YVc0eElpd2lkVjloWkdSeUlqb2lNVEkzTGpBdU1DNHhJaXdpWlhod0lqb3hOalEzTXpFd09UUTBMQ0pwWVhRaU9qRTJORGN6TVRBd05EUXNJbTVpWmlJNk1UWTBOek14TURBME5IMC5oRTg3WDZ5akRwUDNOYV9uakNPdXNrRWxrcElVd0xmQzVCZVJraW1QemhZ
+Content-Type: application/json
+
+{
+  "notion_token": "secret_7PGIsvNANvEuuFieGlPTsCqLfVISsNUFt2bhrW4OnvU",
+  "notion_bills_id": "bdfd5389bc314092a7a05ead398d7bf3",
+  "notion_account_id": "2ac0c304e60c454ba4997763c541d769",
+  "notion_investment_id": "10f277d286f142dd9714e63a3445e542",
+  "notion_investment_account_id": "7729edfb19f44742b6832734edc51393",
+  "notion_budget_id": "2bfcf2e1fec845f19333c7706ee35e27"
+}
+
+###
+GET http://127.0.0.1:6001/v1/u/2/pref
+Authorization: Bearer ZXlKaGJHY2lPaUpJVXpJMU5pSXNJblI1Y0NJNklrcFhWQ0o5LmV5SjFYM0p2YkdVaU9qRXNJblZwWkNJNk1pd2lkVjl1WVcxbElqb2lZV1J0YVc0eElpd2lkVjloWkdSeUlqb2lNVEkzTGpBdU1DNHhJaXdpWlhod0lqb3hOalEzTXpJMk56UXlMQ0pwWVhRaU9qRTJORGN6TWpVNE5ESXNJbTVpWmlJNk1UWTBOek15TlRnME1uMC4xOGY3cnI4TTRHTXdJYldsVUt3YXVWaEhxck5YUTMwdGg2aFNpNktWQ2M4
+
+###
+GET http://127.0.0.1:6001/v1/u/2
+Authorization: Bearer ZXlKaGJHY2lPaUpJVXpJMU5pSXNJblI1Y0NJNklrcFhWQ0o5LmV5SjFYM0p2YkdVaU9qRXdMQ0oxYVdRaU9qSXNJblZmYm1GdFpTSTZJbUZrYldsdU1TSXNJblZmWVdSa2NpSTZJakV5Tnk0d0xqQXVNU0lzSW1WNGNDSTZNVFkwTnpNeU9UZ3hNeXdpYVdGMElqb3hOalEzTXpJNE9URXpMQ0p1WW1ZaU9qRTJORGN6TWpnNU1UTjkuWElYMGYtb3pVZmx4dWc2UVJZY0JhNEdDU19mNVZpLVV1QkdtUnFYODU2dw==
 
 
+###
+PUT http://127.0.0.1:6001/v1/u/2
+Authorization: Bearer ZXlKaGJHY2lPaUpJVXpJMU5pSXNJblI1Y0NJNklrcFhWQ0o5LmV5SjFYM0p2YkdVaU9qRXdMQ0oxYVdRaU9qSXNJblZmYm1GdFpTSTZJbUZrYldsdU1TSXNJblZmWVdSa2NpSTZJakV5Tnk0d0xqQXVNU0lzSW1WNGNDSTZNVFkwTnpNeU9UZ3hNeXdpYVdGMElqb3hOalEzTXpJNE9URXpMQ0p1WW1ZaU9qRTJORGN6TWpnNU1UTjkuWElYMGYtb3pVZmx4dWc2UVJZY0JhNEdDU19mNVZpLVV1QkdtUnFYODU2dw==
+Content-Type: application/json
+
+{"nickname":"admin11"}

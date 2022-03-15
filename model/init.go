@@ -44,6 +44,9 @@ func openMySqlDB(path string) *gorm.DB {
 	if err = db.AutoMigrate(&UserLoginLog{}); err != nil {
 		panic("fail to auto migrate [UserLoginLog] db: " + err.Error())
 	}
+	if err = db.AutoMigrate(&UserPrefModel{}); err != nil {
+		panic("fail to auto migrate [UserPreFSModel] db: " + err.Error())
+	}
 	return db
 }
 

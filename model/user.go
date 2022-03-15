@@ -64,7 +64,7 @@ func (u *UserModel) Check() error {
 	} else if u.Phone != "" {
 		DB.DB.Where("phone = ?", u.Phone).Find(&user)
 		if len(user) != 0 {
-			return errno.ErrUserEmail
+			return errno.ErrUserPhone
 		}
 	} else {
 		return errno.ErrDatabase
@@ -73,7 +73,7 @@ func (u *UserModel) Check() error {
 }
 
 func (u *UserModel) Encrypt() (err error) {
-	u.Password, err = auth.Encrypt(u.Password)
+	u.Password, err = auth.PasswordHash(u.Password)
 	return
 }
 
@@ -98,6 +98,15 @@ func GetUser(username string) (*UserModel, error) {
 	}
 
 	return u, d.Error
+}
+
+func UpdateUserByID(uid uint64, u *UserModel) (*UserModel, error) {
+	var ou UserModel
+	d := DB.DB.First(&ou, uid)
+	ou.Nickname = u.Nickname
+	d.Save(&ou)
+	ou.Password = "******"
+	return &ou, d.Error
 }
 
 func GetUserByID(uid uint64) (*UserModel, error) {

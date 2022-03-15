@@ -25,24 +25,6 @@ func Load(g *gin.Engine, mw ...gin.HandlerFunc) *gin.Engine {
 		c.JSON(200, "hello, this is MinePin backend.")
 	})
 
-	// login/register
-	g.POST("/login", user.Login)
-	g.POST("/register", user.Create)
-	gr := g.Group("/:id/refresh")
-	gr.Use(middleware.AuthRefreshTokenMiddleware())
-	{
-		gr.GET("", token.RefreshToken)
-	}
-
-	// v1 api
-	v1 := g.Group("/v1")
-	// v1 api for user
-	v1u := v1.Group("/user")
-	v1u.Use(middleware.AuthMiddleware())
-	{
-		v1u.GET("", user.List)
-	}
-
 	// system status description
 	gsd := g.Group("/sd")
 	{
@@ -50,6 +32,36 @@ func Load(g *gin.Engine, mw ...gin.HandlerFunc) *gin.Engine {
 		gsd.GET("/disk", sd.DiskCheck)
 		gsd.GET("/cpu", sd.CPUCheck)
 		gsd.GET("/ram", sd.RAMCheck)
+	}
+
+	// v1 api
+	v1 := g.Group("/v1")
+
+	// login/register
+	v1.POST("/login", user.Login)
+	v1.POST("/register", user.Create)
+
+	// user refresh token
+	v1ur := v1.Group("/u/:id/refresh")
+	v1ur.Use(middleware.AuthRefreshTokenMiddleware())
+	{
+		v1ur.GET("", token.RefreshToken)
+	}
+	// Admin User
+	v1ua := v1.Group("/u/a")
+	v1ua.Use(middleware.AuthAdminMiddleware())
+	{
+		v1ua.GET("/list", user.List)
+	}
+
+	// Average User
+	v1u := v1.Group("/u")
+	v1u.Use(middleware.AuthMiddleware())
+	{
+		v1u.GET("/:id/pref", user.GetPreferences)
+		v1u.PUT("/:id/pref", user.SetPreferences)
+		v1u.PUT("/:id", user.PutUpdateUser)
+		v1u.GET("/:id", user.GetUser)
 	}
 
 	return g

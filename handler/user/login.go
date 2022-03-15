@@ -23,7 +23,7 @@ func Login(c *gin.Context) {
 		return
 	}
 
-	if err := auth.Compare(d.Password, u.Password); err != nil {
+	if pass := auth.PasswordVerify(d.Password, u.Password); pass {
 		handler.SendResponse(c, errno.ErrPasswordIncorrect, nil)
 		return
 	}

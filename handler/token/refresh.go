@@ -14,7 +14,7 @@ import (
 func RefreshToken(c *gin.Context) {
 	uid, err := strconv.ParseUint(c.Param("id"), 10, 64)
 	if err != nil {
-		handler.SendResponse(c, errno.InternalServerError, nil)
+		handler.SendResponse(c, errno.ErrUrl, nil)
 	}
 	u, err := model.GetUserByID(uid)
 	if err != nil {

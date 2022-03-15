@@ -136,7 +136,7 @@ func Parse(tokenString string, secret string) (*Claims, error) {
 
 	if err != nil {
 		logger.ErrorF("Parse Token error with err: %s", err.Error())
-		return ctx, err
+		return ctx, errno.ErrTokenInvalid
 	} else if claims, ok := token.Claims.(jwt.MapClaims); ok && token.Valid {
 		ctx.UID = uint64(claims["uid"].(float64))
 		ctx.URole = model.UserType(claims["u_role"].(float64))
@@ -163,7 +163,19 @@ func ParseRequest(c *gin.Context) (*Claims, error) {
 	fmt.Sscanf(header, "Bearer %s", &t)
 	bt, _ := base64.URLEncoding.DecodeString(t)
 
-	return Parse(string(bt), secret)
+	claims, err := Parse(string(bt), secret)
+	if err != nil {
+		return nil, err
+	}
+
+	// 获取 url 中的 id 参数，不存在时 err 非空，此时无需处理。
+	if uid, err := utils.GetUint64ByContext(c, "id"); err == nil {
+		if uid != claims.UID {
+			return nil, errno.ErrUID
+		}
+	}
+
+	return claims, err
 }
 
 // ParseRefreshTokenRequest 从 HTTP 请求头获取 refresh token
