@@ -22,7 +22,7 @@ func Load(g *gin.Engine, mw ...gin.HandlerFunc) *gin.Engine {
 
 	// Say Hello
 	g.GET("/", func(c *gin.Context) {
-		c.JSON(200, "hello, this is MinePin backend.")
+		c.JSON(200, "hello, this is MineGin backend.")
 	})
 
 	// system status description

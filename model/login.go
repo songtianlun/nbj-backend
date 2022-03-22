@@ -7,6 +7,7 @@ type UserLoginLog struct {
 	RefreshToken string `json:"refresh_token" gorm:"column:refresh_token"`
 	UserAddr     string `json:"user_addr" gorm:"column:user_addr"`
 	UserName     string `json:"user_name" gorm:"column:user_name"`
+	Type         string `json:"type" gorm:"column:type"`
 }
 
 func (u *UserLoginLog) Create() error {

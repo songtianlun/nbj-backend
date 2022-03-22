@@ -115,32 +115,32 @@ func GetString(name string) string { return strings.TrimSpace(viper.GetString(na
 func GetInt(name string) int       { return viper.GetInt(name) }
 func GetBool(name string) bool     { return viper.GetBool(name) }
 
-// Get MinePin Debug Suffix
+// Get MineGin Debug Suffix
 func MPDSx() string {
-	if GetMinePinRunMode() == gin.DebugMode {
+	if GetMineGinRunMode() == gin.DebugMode {
 		return MINEGIN_DEBUG_SUFFIX
 	} else {
 		return ""
 	}
 }
 
-func GetMinePinPort() string             { return GetString(MINEGIN_PORT + MPDSx()) }
-func GetMinePinRunMode() string          { return GetString(MINEGIN_RUNMODE) }
-func GetMinePinMaxPingCount() int        { return GetInt(MINEGIN_MAX_PING_COUNT) }
-func GetMinePinJwtAccessSecret() string  { return GetString(MINEGIN_JWT_ACCESS_SECRET) }
-func GetMinePinJwtRefreshSecret() string { return GetString(MINEGIN_JWT_REFRESH_SECRET) }
+func GetMineGinPort() string             { return GetString(MINEGIN_PORT + MPDSx()) }
+func GetMineGinRunMode() string          { return GetString(MINEGIN_RUNMODE) }
+func GetMineGinMaxPingCount() int        { return GetInt(MINEGIN_MAX_PING_COUNT) }
+func GetMineGinJwtAccessSecret() string  { return GetString(MINEGIN_JWT_ACCESS_SECRET) }
+func GetMineGinJwtRefreshSecret() string { return GetString(MINEGIN_JWT_REFRESH_SECRET) }
 
-func GetMinePinLogLevel() string    { return GetString(MINEGIN_LOG_LEVEL) }
-func GetMinePinLogFileName() string { return GetString(MINEGIN_LOG_FILE_NAME) }
-func GetMinePinLogMaxSizeMb() int   { return GetInt(MINEGIN_LOG_MAX_SIZE_MB) }
-func GetMinePinLogMaxFileNum() int  { return GetInt(MINEGIN_LOG_MAX_FILE_NUM) }
-func GetMinePinLogMaxFileDay() int  { return GetInt(MINEGIN_LOG_MAX_FILE_DAY) }
-func GetMinePinLogCompress() bool   { return GetBool(MINEGIN_LOG_COMPRESS) }
-func GetMinePinLogStdout() bool     { return GetBool(MINEGIN_LOG_STDOUT) }
-func GetMinePinLogOnlyStdout() bool { return GetBool(MINEGIN_LOG_ONLY_STDOUT) }
+func GetMineGinLogLevel() string    { return GetString(MINEGIN_LOG_LEVEL) }
+func GetMineGinLogFileName() string { return GetString(MINEGIN_LOG_FILE_NAME) }
+func GetMineGinLogMaxSizeMb() int   { return GetInt(MINEGIN_LOG_MAX_SIZE_MB) }
+func GetMineGinLogMaxFileNum() int  { return GetInt(MINEGIN_LOG_MAX_FILE_NUM) }
+func GetMineGinLogMaxFileDay() int  { return GetInt(MINEGIN_LOG_MAX_FILE_DAY) }
+func GetMineGinLogCompress() bool   { return GetBool(MINEGIN_LOG_COMPRESS) }
+func GetMineGinLogStdout() bool     { return GetBool(MINEGIN_LOG_STDOUT) }
+func GetMineGinLogOnlyStdout() bool { return GetBool(MINEGIN_LOG_ONLY_STDOUT) }
 
-func GetMinePinDbType() string     { return GetString(MINEGIN_DB_TYPE + MPDSx()) }
-func GetMinePinDbName() string     { return GetString(MINEGIN_DB_NAME + MPDSx()) }
-func GetMinePinDbAddr() string     { return GetString(MINEGIN_DB_ADDR + MPDSx()) }
-func GetMinePinDbUserName() string { return GetString(MINEGIN_DB_USERNAME + MPDSx()) }
-func GetMinePinDbPassWord() string { return GetString(MINEGIN_DB_PASSWORD + MPDSx()) }
+func GetMineGinDbType() string     { return GetString(MINEGIN_DB_TYPE + MPDSx()) }
+func GetMineGinDbName() string     { return GetString(MINEGIN_DB_NAME + MPDSx()) }
+func GetMineGinDbAddr() string     { return GetString(MINEGIN_DB_ADDR + MPDSx()) }
+func GetMineGinDbUserName() string { return GetString(MINEGIN_DB_USERNAME + MPDSx()) }
+func GetMineGinDbPassWord() string { return GetString(MINEGIN_DB_PASSWORD + MPDSx()) }

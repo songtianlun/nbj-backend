@@ -46,6 +46,7 @@ func Login(c *gin.Context) {
 			AccessToken:  t,
 			RefreshToken: r,
 			UserAddr:     utils.GetAddrFromContext(c),
+			Type:         "np",
 		}
 		if err = log.Create(); err != nil {
 			return

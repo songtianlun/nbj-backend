@@ -52,19 +52,19 @@ func openMySqlDB(path string) *gorm.DB {
 
 func (db *Database) Init() {
 	var gdb *gorm.DB
-	switch config.GetMinePinDbType() {
+	switch config.GetMineGinDbType() {
 	case "sqlite3":
-		gdb = openSqliteDB(config.GetMinePinDbAddr())
+		gdb = openSqliteDB(config.GetMineGinDbAddr())
 	case "mysql":
 		gdb = openMySqlDB(
 			fmt.Sprintf("%s:%s@tcp(%s)/%s?charset=utf8mb4&parseTime=True&loc=Local",
-				config.GetMinePinDbUserName(),
-				config.GetMinePinDbPassWord(),
-				config.GetMinePinDbAddr(),
-				config.GetMinePinDbName()))
+				config.GetMineGinDbUserName(),
+				config.GetMineGinDbPassWord(),
+				config.GetMineGinDbAddr(),
+				config.GetMineGinDbName()))
 	}
 	logger.InfoF("connected to %s with %s",
-		config.GetMinePinDbAddr(), config.GetMinePinDbType())
+		config.GetMineGinDbAddr(), config.GetMineGinDbType())
 	DB = &Database{
 		DB: gdb,
 	}

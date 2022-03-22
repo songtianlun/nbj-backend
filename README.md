@@ -6,6 +6,8 @@ a go web server template with gin.
 
 ```bash
 $ cp ./conf/config.sample.yaml ./conf/config.yaml
+$  openssl rand 16 -hex
+#  openssl rand 32 -hex
 # 配置必选项，或根据提示配置必要的环境变量
 $ go mod tidy
 # use [air](https://github.com/cosmtrek/air)

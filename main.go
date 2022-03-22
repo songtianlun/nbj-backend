@@ -17,7 +17,7 @@ import (
 )
 
 var (
-	cfg     = pflag.StringP("config", "c", "", "MinePin config file path.")
+	cfg     = pflag.StringP("config", "c", "", "MineGin config file path.")
 	version = pflag.BoolP("version", "v", false, "show version info.")
 )
 
@@ -44,7 +44,7 @@ func main() {
 
 	model.DB.Init()
 
-	gin.SetMode(config.GetMinePinRunMode())
+	gin.SetMode(config.GetMineGinRunMode())
 	g := gin.New()
 
 	middlewares := []gin.HandlerFunc{}
@@ -62,13 +62,13 @@ func main() {
 		logger.Info("The route has been deployed successfully.")
 	}()
 
-	logger.InfoF("Start to listening the incoming requests on http address: '%s'", ":"+config.GetMinePinPort())
-	logger.Info(http.ListenAndServe(":"+config.GetMinePinPort(), g).Error())
+	logger.InfoF("Start to listening the incoming requests on http address: '%s'", ":"+config.GetMineGinPort())
+	logger.Info(http.ListenAndServe(":"+config.GetMineGinPort(), g).Error())
 }
 
 func pingServer() error {
-	for i := 0; i < config.GetMinePinMaxPingCount(); i++ {
-		resp, err := http.Get("http://127.0.0.1:" + config.GetMinePinPort() + "/sd/health")
+	for i := 0; i < config.GetMineGinMaxPingCount(); i++ {
+		resp, err := http.Get("http://127.0.0.1:" + config.GetMineGinPort() + "/sd/health")
 		if err == nil && resp.StatusCode == 200 {
 			return nil
 		}

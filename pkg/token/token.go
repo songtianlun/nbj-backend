@@ -50,7 +50,7 @@ func SignAccessToken(c Claims, rID uint64) (accessTokenString string, err error)
 		ExpiresAt: atExpiresAt.Unix(),
 		IssuedAt:  startTime.Unix(),
 		NotBefore: startTime.Unix(),
-	}, config.GetMinePinJwtAccessSecret())
+	}, config.GetMineGinJwtAccessSecret())
 	if err != nil {
 		return "", err
 	}
@@ -79,7 +79,7 @@ func SignRefreshToken(c Claims) (refreshTokenString string, refreshID uint64, er
 		ExpiresAt: rtExpiresAt.Unix(),
 		IssuedAt:  startTime.Unix(),
 		NotBefore: startTime.Unix(),
-	}, config.GetMinePinJwtRefreshSecret())
+	}, config.GetMineGinJwtRefreshSecret())
 
 	if err != nil {
 		return "", 0, err
@@ -159,7 +159,7 @@ func Parse(tokenString string, secret string) (*Claims, error) {
 // 并将其传递给 Parse 函数以验证 token 有消息。
 func ParseRequest(c *gin.Context) (*Claims, error) {
 	header := c.Request.Header.Get("Authorization")
-	secret := config.GetMinePinJwtAccessSecret()
+	secret := config.GetMineGinJwtAccessSecret()
 
 	if len(header) == 0 {
 		return &Claims{}, ErrMissingHeader
@@ -188,7 +188,7 @@ func ParseRequest(c *gin.Context) (*Claims, error) {
 // 并将其传递给 Parse 函数以验证 token 合法性。
 func ParseRefreshTokenRequest(c *gin.Context) (*Claims, error) {
 	header := c.Request.Header.Get("Authorization")
-	secret := config.GetMinePinJwtRefreshSecret()
+	secret := config.GetMineGinJwtRefreshSecret()
 
 	if len(header) == 0 {
 		return &Claims{}, ErrMissingHeader

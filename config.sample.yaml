@@ -4,12 +4,12 @@
 runmode: release             # MINEGIN_RUNMODE 开发模式, debug, *release, test
 port: 6000                   # * MINEGIN_PORT HTTP绑定端口
 port_debug: 6001             # MINEGIN_PORT_DEBUG
-name: minepin                # * MINEGIN_NAME API Server 服务名称
+name: minepin                # MINEGIN_NAME API Server 服务名称
 max_ping_count: 3            # MINEGIN_MAX_PING_COUNT 服务健康监测最多尝试次数
 
 jwt:                         # * MINEGIN_JWT_SECRET JWT 签发密钥，该值为测试密钥
-  access_secret: c4ce87cb12d0d6a65458c0cb38779cec
-  refresh_secret: 25e0aacbe8e52824bfb397e569f0ab16e1005c397540c95b277df27eaec97ff6
+  access_secret: c4ce87cb12d0d6a65458c0cb38779cec                                  # * MINEGIN_JWT_ACCESS_SECRET
+  refresh_secret: 25e0aacbe8e52824bfb397e569f0ab16e1005c397540c95b277df27eaec97ff6 # * MINEGIN_JWT_REFRESH_SECRET
 
 log:
   level: info         # MINEGIN_LOG_LEVEL debug->info->warn->error
