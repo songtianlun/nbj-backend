@@ -1,6 +1,6 @@
 package user
 
-import "minepin-backend/model"
+import "mingin/model"
 
 type CreateReq struct {
 	Nickname string `json:"nickname"`

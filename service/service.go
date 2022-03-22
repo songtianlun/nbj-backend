@@ -2,7 +2,7 @@ package service
 
 import (
 	"fmt"
-	"minepin-backend/model"
+	"mingin/model"
 	"sync"
 )
 
@@ -40,9 +40,9 @@ func ListUser(offset, limit int) ([]*model.UserInfo, int64, error) {
 			userList.Lock.Lock()
 			defer userList.Lock.Unlock()
 			userList.IdMap[u.Id] = &model.UserInfo{
-				ID:        u.Id,
-				Email:     u.Email,
-				Phone:     u.Phone,
+				ID:    u.Id,
+				Email: u.Email,
+				// Phone:     u.Phone,
 				Nickname:  u.Nickname,
 				Role:      u.Role,
 				CreatedAt: u.CreatedAt.Format("2006-01-02 15:04:05"),

@@ -2,9 +2,9 @@ package user
 
 import (
 	"github.com/gin-gonic/gin"
-	"minepin-backend/handler"
-	"minepin-backend/pkg/errno"
-	"minepin-backend/service"
+	"mingin/handler"
+	"mingin/pkg/errno"
+	"mingin/service"
 )
 
 func List(c *gin.Context) {

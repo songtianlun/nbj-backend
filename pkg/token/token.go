@@ -6,11 +6,11 @@ import (
 	"fmt"
 	"github.com/dgrijalva/jwt-go"
 	"github.com/gin-gonic/gin"
-	"minepin-backend/config"
-	"minepin-backend/model"
-	"minepin-backend/pkg/errno"
-	"minepin-backend/pkg/logger"
-	"minepin-backend/utils"
+	"mingin/config"
+	"mingin/model"
+	"mingin/pkg/errno"
+	"mingin/pkg/logger"
+	"mingin/utils"
 	"time"
 )
 
@@ -24,6 +24,7 @@ type Claims struct {
 	UID   uint64         `json:"uid"`    // 用户 ID
 	UName string         `json:"u_name"` // 用户 nickname
 	UAddr string         `json:"u_addr"` // 用户 addr
+	RtID  uint64         `json:"rt_id"`  // refresh token id，若为 refresh token 该值为0
 	jwt.StandardClaims
 }
 
@@ -40,9 +41,10 @@ func SignWithClaims(c Claims, sc jwt.StandardClaims, s string) (TokenS string, e
 	return
 }
 
-func SignAccessToken(c Claims) (accessTokenString string, err error) {
+func SignAccessToken(c Claims, rID uint64) (accessTokenString string, err error) {
 	startTime := time.Now()
 	atExpiresAt := time.Now().Add(time.Minute * 15)
+	c.RtID = rID
 
 	accessTokenString, err = SignWithClaims(c, jwt.StandardClaims{
 		ExpiresAt: atExpiresAt.Unix(),
@@ -68,9 +70,10 @@ func SignAccessToken(c Claims) (accessTokenString string, err error) {
 	return
 }
 
-func SignRefreshToken(c Claims) (refreshTokenString string, err error) {
+func SignRefreshToken(c Claims) (refreshTokenString string, refreshID uint64, err error) {
 	startTime := time.Now()
 	rtExpiresAt := time.Now().Add(time.Hour * 24 * 7)
+	c.RtID = 0
 
 	refreshTokenString, err = SignWithClaims(c, jwt.StandardClaims{
 		ExpiresAt: rtExpiresAt.Unix(),
@@ -79,7 +82,7 @@ func SignRefreshToken(c Claims) (refreshTokenString string, err error) {
 	}, config.GetMinePinJwtRefreshSecret())
 
 	if err != nil {
-		return "", err
+		return "", 0, err
 	}
 
 	refresh := model.UserRTokenModel{
@@ -92,8 +95,8 @@ func SignRefreshToken(c Claims) (refreshTokenString string, err error) {
 		NotBefore:    startTime,
 	}
 
-	if err = refresh.RegisterRefreshToken(); err != nil {
-		return "", err
+	if refreshID, err = refresh.RegisterRefreshToken(); err != nil {
+		return "", 0, err
 	}
 
 	logger.InfoF("register token for client [%s] ", c.UAddr)
@@ -102,11 +105,13 @@ func SignRefreshToken(c Claims) (refreshTokenString string, err error) {
 }
 
 func Sign(c Claims) (accessTokenString string, refreshTokenString string, err error) {
-	accessTokenString, err = SignAccessToken(c)
+	var rID uint64
+	refreshTokenString, rID, err = SignRefreshToken(c)
 	if err != nil {
 		return "", "", err
 	}
-	refreshTokenString, err = SignRefreshToken(c)
+
+	accessTokenString, err = SignAccessToken(c, rID)
 	if err != nil {
 		return "", "", err
 	}
@@ -142,6 +147,7 @@ func Parse(tokenString string, secret string) (*Claims, error) {
 		ctx.URole = model.UserType(claims["u_role"].(float64))
 		ctx.UName = claims["u_name"].(string)
 		ctx.UAddr = claims["u_addr"].(string)
+		ctx.RtID = uint64(claims["rt_id"].(float64))
 
 		return ctx, nil
 	} else {
@@ -204,7 +210,7 @@ func ParseRefreshTokenRequest(c *gin.Context) (*Claims, error) {
 	}
 
 	if _, err = model.ReTokenEffective(t); err != nil {
-		return nil, err
+		return nil, errno.ErrRTokenInvalid
 	}
 
 	// Refresh Token 仅能验证一次，验证成功颁发一组新 Token，无论成功与否该 rt 必须失效

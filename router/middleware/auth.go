@@ -2,10 +2,10 @@ package middleware
 
 import (
 	"github.com/gin-gonic/gin"
-	"minepin-backend/handler"
-	"minepin-backend/model"
-	"minepin-backend/pkg/errno"
-	"minepin-backend/pkg/token"
+	"mingin/handler"
+	"mingin/model"
+	"mingin/pkg/errno"
+	"mingin/pkg/token"
 )
 
 // AuthMiddleware 验证 Token 是否有效

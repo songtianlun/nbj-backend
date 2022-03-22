@@ -2,9 +2,9 @@ package user
 
 import (
 	"github.com/gin-gonic/gin"
-	"minepin-backend/handler"
-	"minepin-backend/model"
-	"minepin-backend/pkg/errno"
+	"mingin/handler"
+	"mingin/model"
+	"mingin/pkg/errno"
 	"strconv"
 )
 

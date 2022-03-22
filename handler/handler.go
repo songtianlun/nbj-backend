@@ -2,7 +2,7 @@ package handler
 
 import (
 	"github.com/gin-gonic/gin"
-	"minepin-backend/pkg/errno"
+	"mingin/pkg/errno"
 	"net/http"
 )
 

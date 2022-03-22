@@ -2,12 +2,12 @@ package user
 
 import (
 	"github.com/gin-gonic/gin"
-	"minepin-backend/handler"
-	"minepin-backend/model"
-	"minepin-backend/pkg/auth"
-	"minepin-backend/pkg/errno"
-	"minepin-backend/pkg/token"
-	"minepin-backend/utils"
+	"mingin/handler"
+	"mingin/model"
+	"mingin/pkg/auth"
+	"mingin/pkg/errno"
+	"mingin/pkg/token"
+	"mingin/utils"
 )
 
 func Login(c *gin.Context) {
@@ -52,5 +52,5 @@ func Login(c *gin.Context) {
 		}
 	}()
 
-	handler.SendResponse(c, nil, model.Token{UserID: d.Id, AccessToken: t, RefreshToken: r})
+	handler.SendResponse(c, nil, model.Token{UserID: d.Id, Nickname: d.Nickname, AccessToken: t, RefreshToken: r})
 }

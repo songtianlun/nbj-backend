@@ -3,11 +3,11 @@ package token
 import (
 	"github.com/dgrijalva/jwt-go"
 	"github.com/gin-gonic/gin"
-	"minepin-backend/handler"
-	"minepin-backend/model"
-	"minepin-backend/pkg/errno"
-	"minepin-backend/pkg/token"
-	"minepin-backend/utils"
+	"mingin/handler"
+	"mingin/model"
+	"mingin/pkg/errno"
+	"mingin/pkg/token"
+	"mingin/utils"
 	"strconv"
 )
 

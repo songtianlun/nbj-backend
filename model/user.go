@@ -3,10 +3,10 @@ package model
 import (
 	"github.com/go-playground/validator/v10"
 	"gorm.io/gorm"
-	"minepin-backend/pkg/auth"
-	"minepin-backend/pkg/constvar"
-	"minepin-backend/pkg/errno"
-	"minepin-backend/pkg/logger"
+	"mingin/pkg/auth"
+	"mingin/pkg/constvar"
+	"mingin/pkg/errno"
+	"mingin/pkg/logger"
 	"regexp"
 	"sync"
 )
@@ -22,8 +22,8 @@ const (
 
 type UserModel struct {
 	BaseModel
-	Email    string   `json:"email" gorm:"column:email;primary_key;default:-" validate:"max=64"`
-	Phone    string   `json:"phone" gorm:"column:phone;primary_key;default:-" validate:"max=16"`
+	Email string `json:"email" gorm:"column:email;unique" validate:"max=64"`
+	// Phone    string   `json:"phone" gorm:"column:phone;unique" validate:"max=16"`
 	Password string   `json:"password" gorm:"column:password;not null" validate:"min=5,max=128"`
 	Nickname string   `json:"nickname" gorm:"column:nickname;not null;default:-" validate:"min=1,max=128"`
 	Role     UserType `json:"role" gorm:"column:role;default:1"`
@@ -35,9 +35,9 @@ type UserBind struct {
 }
 
 type UserInfo struct {
-	ID        uint64   `json:"id"`
-	Email     string   `json:"email"`
-	Phone     string   `json:"phone"`
+	ID    uint64 `json:"id"`
+	Email string `json:"email"`
+	// Phone     string   `json:"phone"`
 	Nickname  string   `json:"nickname"`
 	Role      UserType `json:"role"`
 	SayHello  string   `json:"sayHello"`
@@ -61,11 +61,11 @@ func (u *UserModel) Check() error {
 		if len(user) != 0 {
 			return errno.ErrUserEmail
 		}
-	} else if u.Phone != "" {
-		DB.DB.Where("phone = ?", u.Phone).Find(&user)
-		if len(user) != 0 {
-			return errno.ErrUserPhone
-		}
+		// } else if u.Phone != "" {
+		// 	DB.DB.Where("phone = ?", u.Phone).Find(&user)
+		// 	if len(user) != 0 {
+		// 		return errno.ErrUserPhone
+		// 	}
 	} else {
 		return errno.ErrDatabase
 	}

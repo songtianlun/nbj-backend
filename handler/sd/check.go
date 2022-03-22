@@ -2,7 +2,7 @@ package sd
 
 import (
 	"github.com/gin-gonic/gin"
-	"minepin-backend/pkg/health"
+	"mingin/pkg/health"
 	"net/http"
 )
 

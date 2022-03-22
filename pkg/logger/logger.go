@@ -4,7 +4,7 @@ import (
 	"github.com/natefinch/lumberjack"
 	"go.uber.org/zap"
 	"go.uber.org/zap/zapcore"
-	"minepin-backend/config"
+	"mingin/config"
 	"os"
 )
 

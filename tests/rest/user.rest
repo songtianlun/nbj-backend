@@ -2,7 +2,7 @@
 POST http://127.0.0.1:6001/v1/register/
 Content-Type: application/json
 
-{"nickname":"admin1","password":"123456", "email":"stl@frytea.com","phone": "18000000000"}
+{"nickname":"你好","password":"123456", "email":"stl@frytea.com"}
 
 ###
 POST http://127.0.0.1:6001/v1/login
@@ -11,13 +11,23 @@ Content-Type: application/json
 {"username":"stl@frytea.com","password":"123456"}
 
 ###
+POST http://127.0.0.1:6001/v1/login
+Content-Type: application/json
+
+{"username":"1305647042@qq.com","password":"tianlun666"}
+
+###
+GET http://127.0.0.1:6001/v1/u/651/logout
+Authorization: Bearer ZXlKaGJHY2lPaUpJVXpJMU5pSXNJblI1Y0NJNklrcFhWQ0o5LmV5SjFYM0p2YkdVaU9qRXNJblZwWkNJNk5qVXhMQ0oxWDI1aGJXVWlPaUp6ZEd3eElpd2lkVjloWkdSeUlqb2lNVEkzTGpBdU1DNHhJaXdpY25SZmFXUWlPamcyTENKbGVIQWlPakUyTkRjNE5ESTFNekVzSW1saGRDSTZNVFkwTnpnME1UWXpNU3dpYm1KbUlqb3hOalEzT0RReE5qTXhmUS5GRExyNWxVbVBUTG51OUZaa19OUGNqRkZJRnY0MGVBbmVJSVZFSDkyX09R
+
+###
 GET http://127.0.0.1:6001/v1/u/a/list
 Authorization: Bearer ZXlKaGJHY2lPaUpJVXpJMU5pSXNJblI1Y0NJNklrcFhWQ0o5LmV5SjFYM0p2YkdVaU9qRXdMQ0oxYVdRaU9qSXNJblZmYm1GdFpTSTZJbUZrYldsdU1TSXNJblZmWVdSa2NpSTZJakV5Tnk0d0xqQXVNU0lzSW1WNGNDSTZNVFkwTnpNeU9EZ3hNU3dpYVdGMElqb3hOalEzTXpJM09URXhMQ0p1WW1ZaU9qRTJORGN6TWpjNU1URjkuZ041dmhmb0o2ek1nYjItbWJWSWpHVkZwWWZsbE1jWF9OQzFjS2dOc3Z6aw==
 Content-Type: application/json
 
 ###
 GET http://127.0.0.1:6001/v1/u/2/refresh
-Authorization: Bearer ZXlKaGJHY2lPaUpJVXpJMU5pSXNJblI1Y0NJNklrcFhWQ0o5LmV5SjFYM0p2YkdVaU9qRXNJblZwWkNJNk1pd2lkVjl1WVcxbElqb2lZV1J0YVc0eElpd2lkVjloWkdSeUlqb2lNVEkzTGpBdU1DNHhJaXdpWlhod0lqb3hOalEzT1RFeU9USXpMQ0pwWVhRaU9qRTJORGN6TURneE1qTXNJbTVpWmlJNk1UWTBOek13T0RFeU0zMC5WeG9ib0tObkZRRUlHalZVaTBQQXlyTnNUY3lBNEpGY0trRGdFZGVwMng4
+Authorization: Bearer ZXlKaGJHY2lPaUpJVXpJMU5pSXNJblI1Y0NJNklrcFhWQ0o5LmV5SjFYM0p2YkdVaU9qRXNJblZwWkNJNk5qVXhMQ0oxWDI1aGJXVWlPaUp6ZEd3eElpd2lkVjloWkdSeUlqb2lNVEkzTGpBdU1DNHhJaXdpY25SZmFXUWlPakFzSW1WNGNDSTZNVFkwT0RRME5qUXpNU3dpYVdGMElqb3hOalEzT0RReE5qTXhMQ0p1WW1ZaU9qRTJORGM0TkRFMk16RjkubUJpRy12Uy1uVGRGbWUyR0ZwaEZldXV0R21yQ18tZWxxN1drMWxjRnlZSQ==
 
 ###
 PUT http://127.0.0.1:6001/v1/u/2/pref

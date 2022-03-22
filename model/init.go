@@ -5,8 +5,8 @@ import (
 	"gorm.io/driver/mysql"
 	"gorm.io/driver/sqlite"
 	"gorm.io/gorm"
-	"minepin-backend/config"
-	"minepin-backend/pkg/logger"
+	"mingin/config"
+	"mingin/pkg/logger"
 )
 
 type Database struct {

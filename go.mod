@@ -1,4 +1,4 @@
-module minepin-backend
+module mingin
 
 go 1.16
 
@@ -7,7 +7,6 @@ require (
 	github.com/fsnotify/fsnotify v1.5.1
 	github.com/gin-gonic/gin v1.7.7
 	github.com/go-playground/validator/v10 v10.10.0
-	github.com/google/uuid v1.3.0
 	github.com/mattn/go-sqlite3 v1.14.10 // indirect
 	github.com/natefinch/lumberjack v2.0.0+incompatible
 	github.com/shirou/gopsutil/v3 v3.21.12

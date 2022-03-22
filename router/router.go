@@ -2,10 +2,10 @@ package router
 
 import (
 	"github.com/gin-gonic/gin"
-	"minepin-backend/handler/sd"
-	"minepin-backend/handler/token"
-	"minepin-backend/handler/user"
-	"minepin-backend/router/middleware"
+	"mingin/handler/sd"
+	"mingin/handler/token"
+	"mingin/handler/user"
+	"mingin/router/middleware"
 	"net/http"
 )
 
@@ -62,6 +62,7 @@ func Load(g *gin.Engine, mw ...gin.HandlerFunc) *gin.Engine {
 		v1u.PUT("/:id/pref", user.SetPreferences)
 		v1u.PUT("/:id", user.PutUpdateUser)
 		v1u.GET("/:id", user.GetUser)
+		v1u.GET("/:id/logout", user.Logout)
 	}
 
 	return g

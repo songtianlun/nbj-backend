@@ -2,7 +2,7 @@ package utils
 
 import (
 	"github.com/gin-gonic/gin"
-	"minepin-backend/pkg/errno"
+	"mingin/pkg/errno"
 	"os"
 	"strconv"
 	"strings"

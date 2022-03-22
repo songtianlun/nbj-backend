@@ -2,10 +2,10 @@ package user
 
 import (
 	"github.com/gin-gonic/gin"
-	"minepin-backend/handler"
-	"minepin-backend/model"
-	"minepin-backend/pkg/errno"
-	"minepin-backend/pkg/logger"
+	"mingin/handler"
+	"mingin/model"
+	"mingin/pkg/errno"
+	"mingin/pkg/logger"
 )
 
 func Create(c *gin.Context) {
@@ -19,7 +19,7 @@ func Create(c *gin.Context) {
 		Nickname: r.Nickname,
 		Password: r.Password,
 		Email:    r.Email,
-		Phone:    r.Phone,
+		// Phone:    r.Phone,
 	}
 
 	if err := u.Validate(); err != nil {
@@ -47,7 +47,7 @@ func Create(c *gin.Context) {
 	rsp := CreateRep{
 		Nickname: r.Nickname,
 		Email:    r.Email,
-		Phone:    r.Phone,
+		// Phone:    r.Phone,
 	}
 
 	handler.SendResponse(c, nil, rsp)

@@ -1,4 +1,4 @@
-# MinePin-backend
+# MineGin-backend
 
 Dev deploy with [render](https://render.com).
 
@@ -34,7 +34,7 @@ $ air
 ## ToDo
 
  - [x] 启动默认 `release` ，开发环境自动 `debug`；
- - [x] 端口配置 `PORT` 变量最高，其次 `MINEPIN_PORT`，再其次配置文件；
+ - [x] 端口配置 `PORT` 变量最高，其次 `MINEGIN_PORT`，再其次配置文件；
  - [x] 日志默认输出到终端，配置后输出到文件；
  - [x] 简单接口鉴权；
  - [ ] 注册、登陆、修改、删除功能。

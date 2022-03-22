@@ -1,6 +1,6 @@
 #!/bin/bash
 
-SERVER="minepin-backend"
+SERVER="minegin"
 BASE_DIR=$PWD
 INTERVAL=2
 

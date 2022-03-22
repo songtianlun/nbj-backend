@@ -1,33 +1,37 @@
-# MinePin Config
+# MineGin Config
 # 配置优先级： 环境变量 > 配置文件内容(./conf/config.yaml)
 # debug 模式下 *.debug > *
-runmode: release             # MINEPIN_RUNMODE 开发模式, debug, release, test
-port: 6000                   # MINEPIN_PORT HTTP绑定端口
-port_debug: 6001             # MINEPIN_PORT_DEBUG
-name: minepin                # MINEPIN_NAME API Server 服务名称
-max_ping_count: 10           # MINEPIN_MAX_PING_COUNT 服务健康监测最多尝试次数
-jwt_secret: Rtg8BPKNEf2mB4mgvKONGPZZQSaJWNLijxR42qRgq0iBb5
-                             # MINEPIN_JWT_SECRET JWT 签发密钥，该值为测试密钥
-log:
-  level: debug        # MINEPIN_LOG_LEVEL debug->info->warn->error
-  file_name: log/minepin-backend.log
-                      # MINEPIN_LOG_FILE_NAME debug file path
-  max_size_mb: 1      # MINEPIN_LOG_MAX_SIZE_MB
-  max_file_num: 64    # MINEPIN_LOG_MAX_FILE_NUM
-  max_file_day: 7     # MINEPIN_LOG_MAX_FILE_DAY
-  compress: false     # MINEPIN_LOG_COMPRESS 日志压缩
-  stdout: true        # MINEPIN_LOG_STDOUT 显式指定日志输出到 stdout
-  only_stdout: true   # MINEPIN_LOG_ONLY_STDOUT 日志仅输出到 stdout
-db:
-  type: sqlite           # MINEPIN_DB_TYPE mysql or sqlite
-  addr: ./minepin.db     # MINEPIN_DB_ADDR example for sqlite
-  name: MYSQL_NAME       # MINEPIN_DB_NAME
-  username: USERNAME     # MINEPIN_DB_USERNAME
-  password: PASSWORD     # MINEPIN_DB_PASSWORD
-  type_debug: mysql                     # MINEPIN_DB_TYPE_DEBUG
-  name_debug: MYSQL_NAME                # MINEPIN_DB_NAME_DEBUG
-  addr_debug: xxxx.xxxx.xxxx.xxxx:3306  # MINEPIN_DB_ADDR_DEBUG
-  username_debug: USERNAME              # MINEPIN_DB_USERNAME_DEBUG
-  password_debug: PASSWORD              # MINEPIN_DB_PASSWORD_DEBUG
+runmode: release             # MINEGIN_RUNMODE 开发模式, debug, *release, test
+port: 6000                   # * MINEGIN_PORT HTTP绑定端口
+port_debug: 6001             # MINEGIN_PORT_DEBUG
+name: minepin                # * MINEGIN_NAME API Server 服务名称
+max_ping_count: 3            # MINEGIN_MAX_PING_COUNT 服务健康监测最多尝试次数
 
-# 注： _debug 后缀表示runmode 为 debug 时生效配置
+jwt:                         # * MINEGIN_JWT_SECRET JWT 签发密钥，该值为测试密钥
+  access_secret: c4ce87cb12d0d6a65458c0cb38779cec
+  refresh_secret: 25e0aacbe8e52824bfb397e569f0ab16e1005c397540c95b277df27eaec97ff6
+
+log:
+  level: info         # MINEGIN_LOG_LEVEL debug->info->warn->error
+  file_name: log/minegin.log
+                      # MINEGIN_LOG_FILE_NAME debug file path
+  max_size_mb: 1      # MINEGIN_LOG_MAX_SIZE_MB
+  max_file_num: 64    # MINEGIN_LOG_MAX_FILE_NUM
+  max_file_day: 7     # MINEGIN_LOG_MAX_FILE_DAY
+  compress: false     # MINEGIN_LOG_COMPRESS 日志压缩
+  stdout: true        # MINEGIN_LOG_STDOUT 显式指定日志输出到 stdout
+  only_stdout: true   # MINEGIN_LOG_ONLY_STDOUT 日志仅输出到 stdout
+db:
+  type: sqlite           # * MINEGIN_DB_TYPE mysql, sqlite
+  addr: ./minegin.db     # * MINEGIN_DB_ADDR example for sqlite
+  name: MYSQL_NAME       # MINEGIN_DB_NAME only mysql
+  username: USERNAME     # MINEGIN_DB_USERNAME only mysql
+  password: PASSWORD     # MINEGIN_DB_PASSWORD only mysql
+  type_debug: mysql                     # MINEGIN_DB_TYPE_DEBUG
+  name_debug: MYSQL_NAME                # MINEGIN_DB_NAME_DEBUG
+  addr_debug: xxxx.xxxx.xxxx.xxxx:3306  # MINEGIN_DB_ADDR_DEBUG
+  username_debug: USERNAME              # MINEGIN_DB_USERNAME_DEBUG
+  password_debug: PASSWORD              # MINEGIN_DB_PASSWORD_DEBUG
+
+# 注1: _debug 后缀表示runmode 为 debug 时生效配置
+# 注2: * 表示该项为建议必选项，建议在环境变量或配置文件中指定。

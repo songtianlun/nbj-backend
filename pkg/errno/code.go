@@ -21,4 +21,6 @@ var (
 	ErrUpdatePref        = &Errno{Code: 20107, Message: "Failed to update user preference."}
 	ErrParamKey          = &Errno{Code: 20108, Message: "Get with illegal key from gin context"}
 	ErrRole              = &Errno{Code: 20109, Message: "The user level is insufficient."}
+	ErrLogoutRToken      = &Errno{Code: 20110, Message: "Logout refresh token error."}
+	ErrRTokenInvalid     = &Errno{Code: 20111, Message: "The refresh token was invalid."}
 )

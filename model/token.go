@@ -7,6 +7,7 @@ import (
 
 type Token struct {
 	UserID       uint64 `json:"user_id"`
+	Nickname     string `json:"nickname"`
 	AccessToken  string `json:"access_token"`
 	RefreshToken string `json:"refresh_token"`
 }
@@ -39,8 +40,8 @@ type UserRTokenModel struct {
 //	return DB.DB.Delete(&u).Error
 //}
 
-func (u *UserRTokenModel) RegisterRefreshToken() error {
-	return DB.DB.Create(&u).Error
+func (u *UserRTokenModel) RegisterRefreshToken() (uint64, error) {
+	return uint64(u.Id), DB.DB.Create(&u).Error
 }
 
 func (u *UserRTokenModel) LogoutRefreshToken() error {
@@ -49,6 +50,10 @@ func (u *UserRTokenModel) LogoutRefreshToken() error {
 
 func LogoutRefreshTokenWithToken(rt string) error {
 	return DB.DB.Where("refresh_token = ?", rt).Delete(&UserRTokenModel{}).Error
+}
+
+func LogoutRefreshTokenWithTokenID(rid uint64) error {
+	return DB.DB.Delete(&UserRTokenModel{}, rid).Error
 }
 
 //func (u *UserATokenModel) BeforeSave(tx *gorm.DB) (err error) {

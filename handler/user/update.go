@@ -2,10 +2,10 @@ package user
 
 import (
 	"github.com/gin-gonic/gin"
-	"minepin-backend/handler"
-	"minepin-backend/model"
-	"minepin-backend/pkg/errno"
-	"minepin-backend/utils"
+	"mingin/handler"
+	"mingin/model"
+	"mingin/pkg/errno"
+	"mingin/utils"
 )
 
 func PutUpdateUser(c *gin.Context) {
